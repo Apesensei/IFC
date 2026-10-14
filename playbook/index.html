@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Counter-side playbook for the Banking Advisor to Financial Advisor path: notes, due diligence checks, discovery, referrals and logs.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230d6a5b'/><path d='M28 52l14 14 30-32' stroke='white' stroke-width='11' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>Branch Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: a counter-side field manual. Sticky header + tab rail, one tool per tab, checklists and pickers instead of prose. */
+:root{
+  --bg:#f2f4f3; --surface:#ffffff; --ink:#14201d; --muted:#5a6a65; --line:#d6dedb;
+  --accent:#0d6a5b; --accent-ink:#ffffff; --accent-soft:#e0eeea;
+  --warn:#9a5600; --warn-soft:#fbeedb; --crit:#b3261e; --crit-soft:#f9e2df; --good:#1d7438; --good-soft:#e2f2e6;
+  --f-display:'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --f-body:'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono:'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0e1413; --surface:#161f1d; --ink:#e4ece9; --muted:#93a39e; --line:#293532;
+  --accent:#4cc2a7; --accent-ink:#06201b; --accent-soft:#15302a;
+  --warn:#f0b259; --warn-soft:#33270f; --crit:#f08b81; --crit-soft:#3a1b18; --good:#72d391; --good-soft:#15301e; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0e1413; --surface:#161f1d; --ink:#e4ece9; --muted:#93a39e; --line:#293532;
+  --accent:#4cc2a7; --accent-ink:#06201b; --accent-soft:#15302a;
+  --warn:#f0b259; --warn-soft:#33270f; --crit:#f08b81; --crit-soft:#3a1b18; --good:#72d391; --good-soft:#15301e; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg); color:var(--ink); font:15px/1.5 var(--f-body); margin:0}
+.wrap{max-width:920px; margin:0 auto; padding-inline:16px; padding-block:0 48px}
+h1,h2,h3{font-family:var(--f-display); text-wrap:balance; margin:0; letter-spacing:-0.01em}
+h2{font-size:22px; font-weight:800}
+h3{font-size:16px; font-weight:700}
+p{margin:0}
+a{color:var(--accent)}
+button, input, select, textarea{font:inherit; color:inherit}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+/* header */
+header{position:sticky; top:env(safe-area-inset-top,0px); z-index:5; background:var(--bg); border-bottom:1px solid var(--line)}
+.hd{max-width:920px; margin:0 auto; padding-inline:16px; padding-block:14px 0; display:flex; flex-direction:column; gap:10px}
+.hd-top{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 16px}
+.brand{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+.brand h1{font-size:22px; font-weight:800}
+.brand span{font-family:var(--f-mono); font-size:12px; color:var(--muted); letter-spacing:.04em}
+.chips{display:flex; gap:6px; flex-wrap:wrap}
+.chip{font-family:var(--f-mono); font-size:12px; padding:4px 9px; border-radius:999px; border:1px solid var(--line); background:var(--surface); white-space:nowrap; font-variant-numeric:tabular-nums}
+.chip.hot{border-color:var(--warn); color:var(--warn); background:var(--warn-soft)}
+.chip.acc{border-color:var(--accent); color:var(--accent); background:var(--accent-soft)}
+nav{display:flex; gap:2px; overflow-x:auto; scrollbar-width:none; margin-inline:-4px}
+nav::-webkit-scrollbar{display:none}
+nav button{background:none; border:0; padding:8px 10px 10px; font-family:var(--f-display); font-weight:700; font-size:14px; color:var(--muted); border-bottom:3px solid transparent; cursor:pointer; white-space:nowrap}
+nav button[aria-selected="true"]{color:var(--ink); border-bottom-color:var(--accent)}
+
+/* sections */
+section{display:flex; flex-direction:column; gap:18px; padding-top:22px}
+.lead{font-size:16px; max-width:65ch}
+.lead b{font-weight:600}
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:16px; display:flex; flex-direction:column; gap:10px; min-width:0}
+.card-hd{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
+.eyebrow{font-family:var(--f-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.src{font-size:12px; color:var(--muted)}
+.src a{color:var(--muted)}
+
+/* checklist */
+.checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px}
+.checks label{display:flex; gap:10px; align-items:flex-start; padding:7px 6px; border-radius:8px; cursor:pointer}
+.checks label:hover{background:var(--accent-soft)}
+.checks input{margin-top:3px; accent-color:var(--accent); width:17px; height:17px; flex:none}
+.checks input:checked + span{color:var(--muted); text-decoration:line-through; text-decoration-color:var(--line)}
+.checks small{display:block; color:var(--muted); font-size:13px}
+.checks input:checked + span small{text-decoration:none}
+
+.btn{border:1px solid var(--line); background:var(--surface); border-radius:8px; padding:6px 12px; cursor:pointer; font-size:13px; font-weight:500}
+.btn:hover{border-color:var(--accent)}
+.btn.pri{background:var(--accent); color:var(--accent-ink); border-color:var(--accent)}
+.btn.ghost{background:none}
+.row{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+
+/* habit strip */
+.habit{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:0; border:1px solid var(--line); border-radius:var(--r); background:var(--surface); overflow:hidden}
+.habit div{padding:14px 16px; border-right:1px solid var(--line); display:flex; flex-direction:column; gap:4px}
+.habit div:last-child{border-right:0}
+.habit b{font-family:var(--f-display); font-size:15px}
+@media (max-width:640px){ .habit div{border-right:0; border-bottom:1px solid var(--line)} .habit div:last-child{border-bottom:0} }
+
+/* counters */
+.counters{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px}
+.ctr{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:12px 14px; display:flex; flex-direction:column; gap:6px}
+.ctr .n{font-family:var(--f-display); font-weight:800; font-size:30px; line-height:1; font-variant-numeric:tabular-nums}
+.ctr .ctl{display:flex; gap:6px}
+.ctr .ctl button{width:34px; height:30px; border-radius:7px; border:1px solid var(--line); background:var(--bg); cursor:pointer; font-weight:600}
+
+/* bridge card */
+.bridge{background:var(--accent-soft); border:1px solid var(--accent); border-radius:var(--r); padding:16px; display:flex; flex-direction:column; gap:10px}
+.bridge q{font-family:var(--f-display); font-size:19px; font-weight:700; quotes:"\201C" "\201D"}
+
+/* alerts */
+.alert{border-radius:var(--r); padding:12px 14px; border:1px solid; font-size:14px}
+.alert.crit{background:var(--crit-soft); border-color:var(--crit)}
+.alert.warn{background:var(--warn-soft); border-color:var(--warn)}
+.alert.ok{background:var(--good-soft); border-color:var(--good)}
+.alert b{font-family:var(--f-display)}
+
+/* four checks stepper */
+.steps{display:grid; gap:10px; counter-reset:s}
+.step{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:14px 16px 14px 56px; position:relative; display:flex; flex-direction:column; gap:6px; cursor:pointer}
+.step::before{counter-increment:s; content:counter(s); position:absolute; left:14px; top:13px; width:28px; height:28px; border-radius:50%; border:2px solid var(--line); display:grid; place-items:center; font-family:var(--f-display); font-weight:800; font-size:14px; color:var(--muted); background:var(--bg)}
+.step.done{border-color:var(--good)}
+.step.done::before{content:"\2713"; background:var(--good); border-color:var(--good); color:var(--surface)}
+.step h3{font-size:16px}
+.step ul{margin:0; padding-left:18px; color:var(--muted); font-size:14px}
+
+/* chips selectable */
+.picks{display:flex; flex-wrap:wrap; gap:6px}
+.pick{border:1px solid var(--line); background:var(--surface); border-radius:999px; padding:6px 12px; cursor:pointer; font-size:13px; text-align:left}
+.pick[aria-pressed="true"]{background:var(--accent); color:var(--accent-ink); border-color:var(--accent)}
+.pick.crit[aria-pressed="true"]{background:var(--crit); border-color:var(--crit); color:var(--surface)}
+.group-label{font-family:var(--f-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-top:6px}
+
+/* flow */
+.flow{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px}
+.flow button{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:10px; text-align:left; cursor:pointer; display:flex; flex-direction:column; gap:2px; min-width:0}
+.flow button .k{font-family:var(--f-mono); font-size:11px; color:var(--muted)}
+.flow button b{font-family:var(--f-display); font-size:14px}
+.flow button[aria-pressed="true"]{border-color:var(--accent); background:var(--accent-soft)}
+@media (max-width:640px){ .flow{grid-template-columns:repeat(2,minmax(0,1fr))} }
+.say{font-family:var(--f-display); font-size:17px; font-weight:700; border-left:3px solid var(--accent); padding-left:12px}
+
+/* table */
+.tbl{overflow-x:auto; border:1px solid var(--line); border-radius:var(--r); background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:14px}
+th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+th{font-family:var(--f-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-weight:500; background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums; font-family:var(--f-mono)}
+
+/* results */
+.results{display:grid; gap:10px}
+.res{background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:var(--r); padding:14px 16px; display:flex; flex-direction:column; gap:8px}
+.res.self{border-left-color:var(--good)}
+.res h3 small{font-family:var(--f-body); font-weight:400; color:var(--muted); font-size:13px}
+.script{background:var(--bg); border-radius:8px; padding:10px 12px; font-size:14px}
+
+/* bars */
+.bars{display:flex; flex-direction:column; gap:7px}
+.bar{display:grid; grid-template-columns:minmax(0,1fr) 44px; gap:4px 10px; align-items:center}
+.bar .lbl{font-size:13px}
+.bar .pct{font-family:var(--f-mono); font-size:13px; text-align:right; font-variant-numeric:tabular-nums}
+.bar .track{grid-column:1 / -1; height:8px; background:var(--bg); border-radius:4px; overflow:hidden}
+.bar .fill{height:100%; background:var(--line)}
+.bar.heavy .fill{background:var(--accent)}
+.bar.heavy .lbl{font-weight:600}
+
+/* stats */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:10px}
+.stat{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:10px 12px}
+.stat .v{font-family:var(--f-display); font-weight:800; font-size:24px; font-variant-numeric:tabular-nums}
+.stat .l{font-size:12px; color:var(--muted)}
+
+/* path */
+.path{display:flex; flex-direction:column; gap:0}
+.stage{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:14px 16px; display:flex; flex-direction:column; gap:6px; cursor:pointer; text-align:left}
+.stage.here{border:2px solid var(--accent); background:var(--accent-soft)}
+.stage .tag{font-family:var(--f-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--accent)}
+.gate{margin-left:24px; border-left:2px dashed var(--line); padding:10px 0 10px 18px; font-size:13px; color:var(--muted)}
+.gate b{color:var(--ink); font-weight:600}
+
+/* forms */
+.form{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px}
+.form label{display:flex; flex-direction:column; gap:4px; font-size:12px; color:var(--muted); font-family:var(--f-mono); letter-spacing:.04em; text-transform:uppercase}
+.form input, .form select, .form textarea, .in{border:1px solid var(--line); border-radius:8px; padding:8px 10px; background:var(--bg); font-family:var(--f-body); font-size:14px; text-transform:none; letter-spacing:0; color:var(--ink); min-width:0}
+.form .wide{grid-column:1 / -1}
+.empty{color:var(--muted); font-size:14px; padding:14px; text-align:center}
+.del{border:0; background:none; color:var(--muted); cursor:pointer; font-size:13px}
+.del:hover{color:var(--crit)}
+ol.plain, ul.plain{margin:0; padding-left:20px; display:flex; flex-direction:column; gap:4px}
+.form textarea{resize:vertical; line-height:1.5}
+.preview{display:flex; flex-direction:column; gap:10px; border-top:1px dashed var(--line); padding-top:12px}
+.notes-list{display:flex; flex-direction:column}
+.note{display:flex; flex-direction:column; gap:8px; padding-block:14px; border-top:1px solid var(--line)}
+.note:first-child{border-top:0; padding-top:4px}
+.note ul.plain li::marker{color:var(--accent)}
+.note ul.qs li::marker{color:var(--warn)}
+.btn.danger{border-color:var(--crit); color:var(--crit)}
+.btn[disabled]{opacity:.6; cursor:progress}
+.toast{position:fixed; left:50%; bottom:calc(16px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%); background:var(--ink); color:var(--bg); padding:8px 14px; border-radius:8px; font-size:13px; opacity:0; pointer-events:none; transition:opacity .2s}
+.toast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){ .toast{transition:none} }
+</style>
+</head>
+<body>
+<header>
+  <div class="hd">
+    <div class="hd-top">
+      <div class="brand"><h1>Branch Playbook</h1><span>TRAINING → BA → FAi → FA</span></div>
+      <div class="chips"><span class="chip acc">FAi target · Jan/Feb 2027</span></div>
+    </div>
+    <nav role="tablist" id="tabs"></nav>
+  </div>
+</header>
+
+<main class="wrap" id="main"></main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+/* ---------- storage (this browser only) ---------- */
+const S = {
+  get(k, d){ try{ const v = localStorage.getItem('bp:'+k); return v===null ? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem('bp:'+k, JSON.stringify(v)); }catch(e){} }
+};
+const today = (()=>{ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); })();
+const weekKey = (()=>{ const d=new Date(); const day=(d.getDay()+6)%7; d.setDate(d.getDate()-day); return d.toISOString().slice(0,10); })();
+const esc = s => String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('on'),1600); }
+async function copy(text){ try{ await navigator.clipboard.writeText(text); toast('Copied'); }catch(e){ toast('Select the text and copy it manually'); } }
+
+/* ---------- checklist helper ---------- */
+function checklist(id, items, scope){
+  const key = 'chk:'+id+':'+(scope==='day'?today:scope==='week'?weekKey:'all');
+  const st = S.get(key, {});
+  return `<ul class="checks" data-key="${key}">` + items.map((it,i)=>{
+    const [t, sub] = Array.isArray(it) ? it : [it];
+    return `<li><label><input type="checkbox" id="${id}-${i}" data-i="${i}" ${st[i]?'checked':''}><span>${t}${sub?`<small>${sub}</small>`:''}</span></label></li>`;
+  }).join('') + `</ul>`;
+}
+document.addEventListener('change', e=>{
+  const ul = e.target.closest('ul.checks'); if(!ul) return;
+  const st = S.get(ul.dataset.key, {}); st[e.target.dataset.i] = e.target.checked; S.set(ul.dataset.key, st);
+});
+function resetChecks(id, scope){ const key='chk:'+id+':'+(scope==='day'?today:scope==='week'?weekKey:'all'); S.set(key,{}); render(); }
+
+/* ---------- data ---------- */
+const SRC = {
+  ciro:['CIRO MSN-0069: KYC and Suitability','https://www.ciro.ca/node/24381'],
+  fintrac:['FINTRAC: Third party determination','https://fintrac-canafe.canada.ca/guidance-directives/client-clientele/tpdr-eng'],
+  cba:['CBA: 8 red flags of financial abuse','https://bankingquestions.cba.ca/red-flags?l=en-us'],
+  ba:['RBC: Banking Advisor posting (Halifax)','https://jobs.rbc.com/ca/en/job/R-0000121213/Banking-Advisor-Intern'],
+  fa:['RBC: Financial Advisor posting','https://jobs.rbc.com/ca/en/job/R-0000120292/Financial-Advisor'],
+  irp:['RBC: Investment & Retirement Planner posting','https://www.ihireinsurance.com/jobs/view/521396830'],
+  fp:['RBC: Financial Planner posting','https://www.ihireinsurance.com/jobs/view/523292853'],
+  ds:['RBC DS: Associate Advisor posting','https://jobs.rbc.com/ca/en/job/R-0000108372/Associate-Advisor'],
+  ref:['RBC Referral Awards (mortgage)','https://referralawards.rbc.com/'],
+  kitces:['Kitces: Magic wand questions','https://www.kitces.com/blog/magic-wand-questions-financial-advisor-discovery-meeting-new-clients-goals/'],
+  upside:['The Daily Upside: Discovery meetings','https://www.thedailyupside.com/advisor/financial-planning/what-to-ask-during-client-discovery-meetings/'],
+  savvy:['Savvy Wealth: Discovery questions','https://www.savvywealth.com/blog-posts/fa-discovery-questions'],
+  standard:['Standard: Ask great questions','https://standard.com/brokers-advisors/annuities/annuity-buzz/get-meaningful-answers-ask-great-questions'],
+  back9:['Back9: How discovery changes everything','https://help.back9ins.com/a/The-Question-Is-the-Strategy-How-Discovery-Changes-Everything'],
+  coconut:['Coconut Software: Branch wealth referrals','https://www.coconutsoftware.com/scaling-wealth-referrals-from-branches-incentives-that-work/']
+};
+const src = (...ks) => `<p class="src">Source: ${ks.map(k=>`<a href="${SRC[k][1]}" target="_blank" rel="noopener">${SRC[k][0]}</a>`).join(' · ')}</p>`;
+
+const BRIDGES = [
+  "While I've got you, what are you saving toward these days?",
+  "Anything coming up this year that we should plan for?",
+  "What's the main thing you want your money to do for you in the next few years?",
+  "Anything changing this year: job, move, wedding, baby, school, retirement?",
+  "When does your mortgage come up for renewal, and where is it?",
+  "Where else do you save or invest?",
+  "If you could fix one thing about your finances overnight, what would it be?"
+];
+
+const QBANK = [
+  ['Opening','What brought you in today?',''],
+  ['Opening',"What's the main thing you want your money to do for you in the next few years?",''],
+  ['Life events','Anything changing this year (job, move, wedding, baby, school, retirement)?',''],
+  ['Life events','Who else depends on you financially?',''],
+  ['Goals','What are your top three money goals right now?','savvy'],
+  ['Goals','If everything went right, what would your finances look like in five years?',''],
+  ['Saving & investing','Where else do you save or invest?',''],
+  ['Saving & investing','Who, besides you, is involved in money decisions?','standard'],
+  ['Saving & investing','How did it feel the last time markets dropped?',''],
+  ['Borrowing','When does your mortgage come up for renewal, and where is it?',''],
+  ['Borrowing',"Any debt you'd like to pay off faster?",''],
+  ['Business','Do you have any income on the side, or a business?',''],
+  ['Business','How do you keep business and personal money separate?',''],
+  ['Concerns',"What's your biggest money worry right now?",''],
+  ['Concerns','Have you worked with an advisor before? What did you like or not like?','savvy'],
+  ['Reset (magic wand)','If you could fix one thing about your finances overnight, what would it be?','kitces']
+];
+
+const PARTNERS = {
+  self:{name:'Handle it yourself', does:'Within your role: open, set up, or advise at the counter.', fit:'Gaps you can close today.', script:"You mentioned {goal}. I can set that up for you right now. It takes about ten minutes."},
+  mort:{name:'Mortgage specialist', does:'Home purchases and switches from other lenders.', fit:'Buying a home, renewal coming up elsewhere, renovation plans.', script:"You mentioned {goal}. Our mortgage specialist can show you exactly what you'd qualify for. Want me to book that now?", src:'ref'},
+  irp:{name:'Investment & Retirement Planner (IRP)', does:'Custom investment solutions; acquires and consolidates assets.', fit:'Assets at another institution, retirement 5–15 years out, RRSP/RRIF questions.', script:"You mentioned {goal}. Our investment and retirement planner looks at everything in one place and builds a plan for it. Can I book you a time this week?", src:'irp'},
+  fp:{name:'Financial Planner (FP)', does:'Ongoing comprehensive planning for mass-affluent clients.', fit:'Several goals competing, wants a full plan, family and tax complexity.', script:"You've got a few things going at once: {goal}. Our financial planner can map all of it into one plan. Want me to set that up?", src:'fp'},
+  ia:{name:'Investment Advisor · RBC Dominion Securities', does:'Full-service wealth management for complex portfolios.', fit:'Large or complex portfolio, wants individual securities, business owner nearing a sale.', script:"With {goal}, it might be worth talking to an Investment Advisor at RBC Dominion Securities. They work with portfolios like this one. Can I make the introduction?", src:'ds'},
+  biz:{name:'Business banking', does:'Business accounts, credit and cash management.', fit:'Side income, a new business, mixing business and personal money.', script:"Since you've got {goal}, keeping business money separate will make taxes and borrowing much easier. Let me connect you with our business team."}
+};
+
+const SIGNALS = [
+  ['Money moving in','Large deposit, bonus or inheritance',['irp','fp','ia'],'Size and complexity decide who. Your branch has its own thresholds, so ask your FPs and IRPs.'],
+  ['Money moving in','Proceeds from a home or business sale',['ia','irp']],
+  ['Money moving in','Large or complex portfolio',['ia']],
+  ['Money moving out','Regular transfers to another institution',['irp','mort'],'Usually investments or a mortgage held elsewhere. Ask which one.'],
+  ['Life events','Buying a home',['mort','self'],'Check whether they have an FHSA.'],
+  ['Life events','Renovation plans',['mort']],
+  ['Life events','Marriage or a baby',['fp','self'],'Material change: update KYC.', true],
+  ['Life events','New job',['self'],'Direct deposit, group plan rollover, RRSP room. Material change: update KYC.', true],
+  ['Life events','Pension rollover',['irp']],
+  ['Life events','Retirement 5–15 years away',['irp']],
+  ['Life events','Death in the family',['fp'],'Material change: update KYC and review suitability within one business day of notice.', true],
+  ['Life events','Several goals competing at once',['fp']],
+  ['Life events','Wants a full financial plan',['fp']],
+  ['Life events','Wants individual securities',['ia']],
+  ['Dates','Mortgage renewal coming up elsewhere',['mort']],
+  ['Dates','GIC maturing',['self','irp']],
+  ['Dates','RRSP season',['self','irp']],
+  ['Dates','Child approaching school age',['self','fp'],'RESP.'],
+  ['Gaps','No TFSA or RRSP',['self']],
+  ['Gaps','High-interest balance, no plan',['self']],
+  ['Gaps','RRSP or RRIF questions',['irp']],
+  ['Business','Side income or a new business',['biz']],
+  ['Business','Mixing business and personal money',['biz']],
+  ['Business','Business owner nearing a sale',['ia','biz']]
+];
+
+const FLAGS_KYC = [
+  'Low investment knowledge but wants high risk',
+  'Older client (e.g. 70) with a long horizon and high risk',
+  'KYC changed right before a trade',
+  'Return expectations higher than their risk profile allows',
+  'Material change: job loss, death in the family, large inheritance'
+];
+const FLAGS_FRAUD = [
+  ['Sudden change of beneficiary or power of attorney','cba'],
+  ['New joint account with someone they met recently','cba'],
+  ['Pressure to sign documents they don’t understand','cba'],
+  ['Missing money or confusion about how it was spent','cba'],
+  ['Bills going unpaid, suddenly short of cash','cba'],
+  ['Costly or unnecessary repairs or purchases','cba'],
+  ['Things missing; someone won’t give them back','cba'],
+  ['Sudden change in living arrangements','cba'],
+  ['Urgency or secrecy ("don’t tell the bank")',''],
+  ['Someone coaching them by phone during the visit',''],
+  ['Cash withdrawal or transfer that doesn’t fit their history',''],
+  ['Grandparent, romance or "bank investigator" story','']
+];
+
+const NOTE_CATS = ['Training','Product','Procedure','Coffee chat','Manager feedback','Other'];
+
+const CHECK_ROOTS = ['1 · Who is this? (ID / third party)','2 · What does the file say?','3 · Does it make sense? (KYC / suitability)','4 · Is it documented?','Discovery: solved before asking','Referral: missed the signal','Product knowledge','Other'];
+
+/* ---------- tabs ---------- */
+const TABS = [
+  ['today','Today'],['notes','Notes'],['diligence','Due diligence'],['discovery','Discovery'],['referrals','Referrals'],['path','Path to FA'],['logs','Logs'],['sources','Sources']
+];
+let tab = (location.hash||'').slice(1); if(!TABS.some(t=>t[0]===tab)) tab = S.get('tab','today'); if(!TABS.some(t=>t[0]===tab)) tab = 'today';
+let flowStep = 0, qArea = 'All', bridgeI = Math.floor(Math.random()*BRIDGES.length);
+let sigSel = new Set(S.get('sigSel',[])), goal = '';
+let flagSel = new Set();
+let stageHere = S.get('stageHere', 0);
+
+function nav(){
+  document.getElementById('tabs').innerHTML = TABS.map(([k,l])=>`<button role="tab" id="tab-${k}" aria-selected="${k===tab}" data-tab="${k}">${l}</button>`).join('');
+}
+document.getElementById('tabs').addEventListener('click', e=>{
+  const b=e.target.closest('button[data-tab]'); if(!b) return;
+  tab=b.dataset.tab; S.set('tab',tab); try{ history.replaceState(null,'','#'+tab);}catch(_){}
+  render(); window.scrollTo({top:0});
+});
+
+/* ---------- views ---------- */
+const V = {};
+
+V.today = () => {
+  const c = S.get('ctr:'+today, {bridge:0, ref:0});
+  const w = S.get('ctrw:'+weekKey, {bridge:0, ref:0});
+  return `
+  <p class="lead">Your three gaps are one habit: <b>slow down at the start of every interaction.</b> Check the file. Ask before you solve. Look for the next need before they leave. Product knowledge comes with reps; this habit is what managers judge for FAi.</p>
+  <div class="habit">
+    <div><span class="eyebrow">Gap 1</span><b>Due diligence</b><span class="small muted">Know who it is, who's really behind it, and whether it fits them before you act.</span></div>
+    <div><span class="eyebrow">Gap 2</span><b>Discovery</b><span class="small muted">Find out what's happening in their life before you recommend anything.</span></div>
+    <div><span class="eyebrow">Gap 3</span><b>Connect the dots</b><span class="small muted">Turn what you learned into the next step: your solution or a warm handoff.</span></div>
+  </div>
+
+  <div class="bridge">
+    <div class="card-hd"><span class="eyebrow">Ask before they leave</span><button class="btn ghost" data-act="nextBridge">Another one</button></div>
+    <q>${esc(BRIDGES[bridgeI])}</q>
+    <span class="small">Handle the request first. Then ask one open question. Most referrals hide behind the transaction.</span>
+  </div>
+
+  <div class="counters">
+    ${ctr('bridge','Bridge questions asked today',c.bridge,w.bridge)}
+    ${ctr('ref','Referrals booked today',c.ref,w.ref)}
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-hd"><h3>60-second pre-client check</h3><button class="btn ghost" data-act="reset" data-id="pre" data-scope="all">Next client</button></div>
+      ${checklist('pre',[
+        ['Read the profile, alerts and last three notes'],
+        ['Check KYC age and whether a review is due'],
+        ['Scan products held and what’s missing','No TFSA, no credit card, no direct deposit'],
+        ['Pick one question to answer before they leave']
+      ],'all')}
+    </div>
+    <div class="card">
+      <div class="card-hd"><h3>Daily routine</h3><span class="eyebrow">Resets daily</span></div>
+      ${checklist('daily',[
+        ['Before the shift (5 min)','Review today’s appointments; run the pre-client check on each'],
+        ['After each client (30 sec)','Note the goal in their words, the key date, the follow-up'],
+        ['End of day (5 min)','Log any mistake or near-miss, plus one thing you learned']
+      ],'day')}
+      <button class="btn" data-goto="logs">Open the mistake log</button>
+    </div>
+  </div>`;
+};
+function ctr(k,label,n,wk){
+  return `<div class="ctr"><span class="eyebrow">${label}</span><div class="row" style="justify-content:space-between"><span class="n">${n}</span><div class="ctl"><button aria-label="Decrease" data-ctr="${k}" data-d="-1">−</button><button aria-label="Increase" data-ctr="${k}" data-d="1">+</button></div></div><span class="small muted">This week: <b>${wk}</b></span></div>`;
+}
+
+V.diligence = () => {
+  const done = S.get('fourDone', [false,false,false,false]);
+  const kycFlags = FLAGS_KYC.map((f,i)=>`<button class="pick crit" aria-pressed="${flagSel.has('k'+i)}" data-flag="k${i}">${f}</button>`).join('');
+  const frFlags = FLAGS_FRAUD.map(([f],i)=>`<button class="pick crit" aria-pressed="${flagSel.has('f'+i)}" data-flag="f${i}">${f}</button>`).join('');
+  const anyK=[...flagSel].some(x=>x[0]==='k'), anyF=[...flagSel].some(x=>x[0]==='f');
+  return `
+  <p class="lead">Most early mistakes come from acting before checking the file and the person. Run the same four checks on every request, a deposit or an investment. <b>Tap each check as you clear it.</b></p>
+  <div class="row"><button class="btn" data-act="resetFour">New request</button><span class="small muted">${done.filter(Boolean).length} of 4 cleared</span></div>
+  <div class="steps">
+    ${step(0,done,'Who is this?',['Verify ID with an approved method.','Confirm they’re the account holder or properly authorized.','Take reasonable measures to tell whether they’re acting for a third party. If you can’t tell but suspect it, that still needs a record (FINTRAC).'])}
+    ${step(1,done,'What does the file say?',['Read the profile, recent activity, notes and alerts.','Check power of attorney and joint-account details.','Ask: does this request fit their normal pattern?'])}
+    ${step(2,done,'Does this make sense for them?',['Investment-related: KYC must be complete, timely and accurate before any recommendation (CIRO).','KYC can’t come from a third party, such as a referral source.','It has to be a real conversation, not a form read aloud.'])}
+    ${step(3,done,'Is it documented?',['Write notes the next person could act on: what was asked, what you checked, what you advised, what the client decided.'])}
+  </div>
+  ${src('fintrac','ciro')}
+
+  <div class="card">
+    <div class="card-hd"><h3>Red-flag scanner</h3><button class="btn ghost" data-act="clearFlags">Clear</button></div>
+    <span class="small muted">Tap anything you’re seeing right now.</span>
+    <span class="group-label">KYC and suitability</span>
+    <div class="picks">${kycFlags}</div>
+    <span class="group-label">Fraud and financial abuse</span>
+    <div class="picks">${frFlags}</div>
+    ${anyF?`<div class="alert crit"><b>Stop and slow it down.</b> Ask more questions, speak to the client alone if you can, and escalate per your branch procedure. Pausing to check is never the mistake that gets you in trouble.</div>`:''}
+    ${anyK?`<div class="alert warn"><b>Ask more before you act.</b> Never adjust KYC to fit a product. The risk profile is the lower of tolerance and capacity. A material change needs a KYC update and a suitability review within one business day of the client’s notice.</div>`:''}
+    ${!anyF&&!anyK?`<div class="alert ok">Nothing flagged. Proceed with the four checks.</div>`:''}
+    ${src('cba','ciro')}
+  </div>
+
+  <div class="card">
+    <div class="card-hd"><h3>KYC checklist · investment conversations</h3><button class="btn ghost" data-act="reset" data-id="kyc" data-scope="all">New client</button></div>
+    ${checklist('kyc',[
+      ['Personal circumstances','Age, employment, dependants'],
+      ['Investment knowledge','Does it match what they say about risk?'],
+      ['Financial circumstances','Income, assets, debts, net worth, any borrowing to invest'],
+      ['Needs and objectives, in their words','"House in 4 years," not "growth"'],
+      ['Time horizon','When they need a significant part of the money'],
+      ['Risk profile','Tolerance (willing) and capacity (able). Use the lower of the two.']
+    ],'all')}
+    ${src('ciro')}
+  </div>`;
+};
+function step(i,done,title,lines){
+  return `<div class="step ${done[i]?'done':''}" role="button" tabindex="0" aria-pressed="${!!done[i]}" data-four="${i}"><h3>${title}</h3><ul>${lines.map(l=>`<li>${l}</li>`).join('')}</ul></div>`;
+}
+
+const FLOW = [
+  ['Handle','Handle the request','Do what they came for, quickly and correctly. That earns you the right to ask more.',"Done. That’s all set for you."],
+  ['Bridge','Bridge','One open question that opens the door.',"While I’ve got you, what are you saving toward these days?"],
+  ['Explore','Explore','Open questions, then layered follow-ups. Open gets stories; layered gets the real picture.',"Tell me more about that. What would that look like?"],
+  ['Summarize','Summarize','Repeat it back in their words.',"So the priority is the down payment by 2028, and you’re not sure the TFSA is set up right."],
+  ['Act','Recommend or refer','One clear next step. Not three products.',"Here’s what I’d do next…"]
+];
+V.discovery = () => {
+  const areas = ['All',...new Set(QBANK.map(q=>q[0]))];
+  const qs = QBANK.filter(q=>qArea==='All'||q[0]===qArea);
+  const f = FLOW[flowStep];
+  return `
+  <p class="lead"><b>Ask before you solve.</b> Handle the request, then ask one open question about why. Talk less than the client. Don’t use discovery to show what you know; ask, and let the silence work.</p>
+  <div class="flow">${FLOW.map((s,i)=>`<button aria-pressed="${i===flowStep}" data-flow="${i}"><span class="k">${i+1}</span><b>${s[1]}</b></button>`).join('')}</div>
+  <div class="card">
+    <span class="eyebrow">Step ${flowStep+1} · ${f[1]}</span>
+    <p>${f[2]}</p>
+    <p class="say">${esc(f[3])}</p>
+  </div>
+  ${src('back9','upside')}
+
+  <div class="card">
+    <div class="card-hd"><h3>Question bank</h3><button class="btn" data-act="randQ">Drill me</button></div>
+    <div class="picks">${areas.map(a=>`<button class="pick" aria-pressed="${a===qArea}" data-area="${esc(a)}">${esc(a)}</button>`).join('')}</div>
+    <div id="drill"></div>
+    <div class="tbl"><table><thead><tr><th>Area</th><th>Question</th><th></th></tr></thead><tbody>
+      ${qs.map(q=>`<tr><td class="small muted" style="white-space:nowrap">${esc(q[0])}</td><td>${esc(q[1])}${q[2]?` <a class="src" href="${SRC[q[2]][1]}" target="_blank" rel="noopener">[${SRC[q[2]][0].split(':')[0]}]</a>`:''}</td><td><button class="btn ghost" data-copy="${esc(q[1])}">Copy</button></td></tr>`).join('')}
+    </tbody></table></div>
+    <div class="alert warn"><b>Client goes quiet or negative?</b> Switch to a future-focused "magic wand" question: "If you could fix one thing about your finances overnight, what would it be?"</div>
+    ${src('kitces')}
+  </div>
+
+  <div class="card">
+    <h3>Note builder</h3>
+    <span class="small muted">Three things in every note, so you or a partner can pick it up months later. Formats only; nothing is saved. Keep client identifiers in RBC systems.</span>
+    <div class="form">
+      <label>Goal, in their words<input id="nbGoal" placeholder="Down payment for a condo"></label>
+      <label>Date that matters<input id="nbDate" placeholder="Renewal Mar 2027"></label>
+      <label>Agreed follow-up<input id="nbFu" placeholder="Book mortgage specialist, call back Fri"></label>
+    </div>
+    <div class="row"><button class="btn pri" data-act="buildNote">Copy note</button></div>
+  </div>`;
+};
+
+V.referrals = () => {
+  const groups = [...new Set(SIGNALS.map(s=>s[0]))];
+  const chosen = SIGNALS.map((s,i)=>[s,i]).filter(([s,i])=>sigSel.has(i));
+  const pmap = new Map();
+  chosen.forEach(([s])=>s[2].forEach(p=>{ if(!pmap.has(p)) pmap.set(p,[]); pmap.get(p).push(s); }));
+  const kycHit = chosen.some(([s])=>s[4]);
+  const g = goal.trim() || 'that goal';
+  const results = [...pmap.entries()].map(([p,sigs])=>{
+    const P = PARTNERS[p]; const script = P.script.replace('{goal}', esc(g));
+    const notes = sigs.filter(s=>s[3]).map(s=>`<li>${esc(s[1])}: ${esc(s[3])}</li>`).join('');
+    return `<div class="res ${p==='self'?'self':''}"><h3>${P.name} <small>· ${P.does}</small></h3>
+      <span class="small muted">Triggered by: ${sigs.map(s=>esc(s[1])).join(', ')}</span>
+      ${notes?`<ul class="plain small">${notes}</ul>`:''}
+      <div class="script">${script}</div>
+      <div class="row"><button class="btn ghost" data-copy="${esc(P.script.replace('{goal}', g))}">Copy script</button>${P.src?src(P.src):''}</div></div>`;
+  }).join('');
+  return `
+  <p class="lead">A referral is the natural end of good discovery, not a separate sales step. <b>Tap what you heard.</b> The tool tells you who it goes to and gives you a line to say.</p>
+  <div class="card">
+    <div class="form"><label class="wide">Their goal, in their words (fills the script)<input id="goalIn" value="${esc(goal)}" placeholder="buying a condo in two years"></label></div>
+    ${groups.map(gname=>`<span class="group-label">${gname}</span><div class="picks">${SIGNALS.map((s,i)=>s[0]===gname?`<button class="pick" aria-pressed="${sigSel.has(i)}" data-sig="${i}">${esc(s[1])}</button>`:'').join('')}</div>`).join('')}
+    <div class="row"><button class="btn ghost" data-act="clearSig">Clear</button></div>
+  </div>
+  ${kycHit?`<div class="alert warn"><b>Material change in there.</b> Update KYC and review suitability before you refer.</div>`:''}
+  <div class="results" id="results">${results || `<div class="empty">Pick a signal above to see who it goes to.</div>`}</div>
+
+  <div class="card">
+    <div class="card-hd"><h3>Warm handoff</h3><button class="btn ghost" data-act="reset" data-id="handoff" data-scope="all">Next referral</button></div>
+    ${checklist('handoff',[
+      ['Connect it to their goal','"You mentioned the condo in two years. Our mortgage specialist can show you exactly what you’d qualify for."'],
+      ['Get permission and book it on the spot','A booked appointment beats a business card.'],
+      ['Pass on context','Goal, key dates, what you’ve done, so the client doesn’t repeat themselves. The common failure: sending a name and never learning what happened.'],
+      ['Close the loop','Check with the partner after, and with the client. Partners who trust you send referrals back.']
+    ],'all')}
+    ${src('coconut')}
+  </div>
+
+  <div class="tbl"><table><thead><tr><th>Partner</th><th>What they do</th><th>Refer when</th></tr></thead><tbody>
+    ${['mort','irp','fp','ia','biz'].map(k=>`<tr><td><b>${PARTNERS[k].name}</b></td><td>${PARTNERS[k].does}</td><td class="muted">${PARTNERS[k].fit}</td></tr>`).join('')}
+  </tbody></table></div>
+  <p class="small muted">Your branch has its own criteria for each partner. Ask your FPs and IRPs what makes a referral great for them; it’s also your best coffee-chat opener. Target: ask the bridge question in every interaction. The referral count follows.</p>
+  ${src('ba','irp','fp','ds','ref')}`;
+};
+
+/* ---------- notes ---------- */
+let notes = [];
+let draft = S.get('draft', {title:'', cat:'Training', raw:''});
+let preview = null;            // {b: 'line\nline', q: 'line\nline'}
+let editingId = null, pendingDel = null;
+let noteQ = '', noteCat = 'All';
+const saveDraft = () => S.set('draft', draft);
+const lines = s => String(s||'').split('\n').map(x=>x.replace(/^\s*(?:[-*•–]|\d+[.)])\s*/,'').trim()).filter(Boolean);
+const fmtDate = iso => { try{ return new Date(iso).toLocaleDateString(undefined,{month:'short', day:'numeric', year:'numeric'}); }catch(e){ return ''; } };
+/* Turns rough notes into bullets: one idea per line or sentence, markers stripped, first letter capitalized.
+   Lines that are questions or start with ask / check / confirm / find out / follow up / todo go to follow-ups. */
+function makeBullets(raw){
+  const out = [];
+  String(raw||'').replace(/\r/g,'').split('\n').forEach(l=>{
+    l = l.replace(/^\s*(?:[-*•–>]|\d+[.)]|[a-z][.)](?=\s))\s*/i,'').trim(); if(!l) return;
+    l.split(/(?<=[.!?])\s+(?=\S)|;\s+/).forEach(p=>{
+      p = p.trim().replace(/[.,;]+$/,''); if(!p) return;
+      out.push(p.charAt(0).toUpperCase() + p.slice(1));
+    });
+  });
+  const isQ = x => /\?\s*$/.test(x) || /^(ask|check|confirm|find out|follow up|follow-up|todo|to do|look up|verify)\b/i.test(x);
+  return {b: out.filter(x=>!isQ(x)).join('\n'), q: out.filter(isQ).join('\n')};
+}
+
+function previewHTML(){
+  if(!preview) return '';
+  return `<div class="preview">
+    <div class="form">
+      <label class="wide">Bullets · one per line, edit freely<textarea id="nBul" rows="${Math.min(14, Math.max(4, lines(preview.b).length+1))}">${esc(preview.b)}</textarea></label>
+      <label class="wide">Questions to follow up · optional<textarea id="nQs" rows="3" placeholder="Anything you need to ask your manager or a partner">${esc(preview.q)}</textarea></label>
+    </div>
+    <div class="row"><button class="btn pri" data-act="saveNote">${editingId?'Save changes':'Save note'}</button><button class="btn ghost" data-act="discardPreview">Discard bullets</button></div>
+  </div>`;
+}
+
+function noteText(n){
+  return `${n.title} (${n.cat}, ${fmtDate(n.created)})\n` + n.bullets.map(b=>'• '+b).join('\n') + (n.questions&&n.questions.length ? '\n\nQuestions:\n' + n.questions.map(q=>'• '+q).join('\n') : '');
+}
+
+function listHTML(){
+  const q = noteQ.trim().toLowerCase();
+  const shown = notes.filter(n => (noteCat==='All' || n.cat===noteCat) && (!q || [n.title,n.cat,...(n.bullets||[]),...(n.questions||[])].join(' ').toLowerCase().includes(q)));
+  if(!notes.length) return `<div class="empty">No notes yet. Write your first one above, make bullets, and save.</div>`;
+  if(!shown.length) return `<div class="empty">No notes match that search.</div>`;
+  return shown.map(n=>`<article class="note">
+    <div class="card-hd"><h3>${esc(n.title)}</h3><span class="chip">${esc(n.cat)}</span></div>
+    <span class="small muted">${fmtDate(n.created)}${n.updated && n.updated!==n.created ? ' · edited '+fmtDate(n.updated) : ''}</span>
+    <ul class="plain">${(n.bullets||[]).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>
+    ${n.questions&&n.questions.length?`<span class="group-label">Questions to follow up</span><ul class="plain qs">${n.questions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
+    <div class="row"><button class="btn ghost" data-ncopy="${esc(n.id)}">Copy</button><button class="btn ghost" data-nedit="${esc(n.id)}">Edit</button><button class="btn ghost ${pendingDel===n.id?'danger':''}" data-ndel="${esc(n.id)}">${pendingDel===n.id?'Confirm delete':'Delete'}</button></div>
+  </article>`).join('');
+}
+
+function updateList(){
+  const el = document.getElementById('notesList'); if(el) el.innerHTML = listHTML();
+  const m = document.getElementById('notesMode');
+  if(m) m.textContent = `${notes.length} saved`;
+}
+
+V.notes = () => `
+  <p class="lead">Write it rough and fast during training, one thought per line. <b>Make bullets</b>, tidy them, save. Everything stays searchable here.</p>
+  <div class="alert warn"><b>No client names, account numbers or confidential bank material.</b> Notes save in this browser on this device only and never leave it. Use Copy all now and then to keep a backup.</div>
+  <div class="card">
+    <div class="form">
+      <label>Topic<input id="nTitle" value="${esc(draft.title)}" placeholder="GIC terms and penalties"></label>
+      <label>Type<select id="nCat">${NOTE_CATS.map(c=>`<option ${c===draft.cat?'selected':''}>${c}</option>`).join('')}</select></label>
+      <label class="wide">Rough notes<textarea id="nRaw" rows="7" placeholder="Type or dictate whatever you heard. Fragments are fine. e.g. cashable gic can redeem after 30 days no penalty, non-redeemable locked til maturity, ask Steph about min amounts">${esc(draft.raw)}</textarea></label>
+    </div>
+    <div class="row">
+      <button class="btn pri" data-act="quickBullets">Make bullets</button>
+      ${editingId?`<button class="btn ghost" data-act="cancelEdit">Cancel edit</button>`:`<button class="btn ghost" data-act="clearDraft">Clear</button>`}
+    </div>
+    <span class="small muted">Each line or sentence becomes a bullet. Lines ending in "?" or starting with "ask", "check" or "confirm" go to follow-ups.</span>
+    ${previewHTML()}
+  </div>
+  <div class="card">
+    <div class="card-hd"><h3>Saved notes</h3><div class="row"><span class="eyebrow" id="notesMode"></span><button class="btn ghost" data-act="copyAll">Copy all</button></div></div>
+    <div class="form">
+      <label>Search<input id="nSearch" value="${esc(noteQ)}" placeholder="GIC, TFSA, overdraft…"></label>
+      <label>Type<select id="nFilter">${['All',...NOTE_CATS].map(c=>`<option ${c===noteCat?'selected':''}>${c}</option>`).join('')}</select></label>
+    </div>
+    <div class="notes-list" id="notesList">${listHTML()}</div>
+  </div>`;
+
+function saveNote(){
+  const bullets = lines(preview && preview.b), questions = lines(preview && preview.q);
+  if(!bullets.length){ toast('Add at least one bullet'); return; }
+  const now = new Date().toISOString();
+  const id = editingId || ('n' + Date.now().toString(36) + Math.random().toString(36).slice(2,6));
+  const prev = notes.find(n=>n.id===id);
+  const body = {id, title: draft.title.trim() || 'Untitled', cat: draft.cat, bullets, questions, raw: draft.raw, created: prev ? prev.created : now, updated: now};
+  notes = [body, ...notes.filter(n=>n.id!==id)].sort((x,y)=>y.created<x.created?-1:1);
+  S.set('notes', notes);
+  draft = {title:'', cat: draft.cat, raw:''}; saveDraft(); preview = null; editingId = null;
+  render(); toast(prev ? 'Updated' : 'Saved');
+}
+
+function deleteNote(id){
+  notes = notes.filter(n=>n.id!==id); S.set('notes', notes);
+  pendingDel = null; updateList(); toast('Deleted');
+}
+
+function initNotes(){ notes = S.get('notes', []); if(!Array.isArray(notes)) notes = []; updateList(); }
+
+const STAGES = [
+  ['Client Advisor training','Now · wraps up next week','Learn transactions, systems and procedures until they’re error-free.','Accuracy, the four checks on every request, clean notes.','Training complete'],
+  ['Banking Advisor (BA)','Training week, then counter time','Serve clients end to end and run discovery in every interaction.','Bridge question asked consistently, referrals booked, no repeated mistakes.','FAi conversation with your manager · target Jan/Feb 2027 · ask for the criteria in writing'],
+  ['FAi','Target Jan/Feb 2027','Start giving investment and credit advice with support.','KYC and suitability done right, steady referrals, growing product depth.','CSI Certificate in Financial Services Advice (PFSA + Financial Planning I)'],
+  ['Financial Advisor (FA)','',"Own a book of clients across banking, credit and investments.",'Opens: mortgage, FP, IRP, IA at RBC Dominion Securities, wealth management or leadership.','']
+];
+V.path = () => `
+  <p class="lead">Each stage has one thing to prove before the next gate. <b>Tap the stage you’re in.</b> The "prove" criteria here are general; get your branch’s real ones from your manager right after BA week and aim your routines at exactly that.</p>
+  <div class="path">
+    ${STAGES.map((s,i)=>`<button class="stage ${i===stageHere?'here':''}" data-stage="${i}" aria-pressed="${i===stageHere}">
+      ${i===stageHere?'<span class="tag">You are here</span>':''}
+      <h3>${s[0]}${s[1]?` <span class="muted small" style="font-family:var(--f-body);font-weight:400">· ${s[1]}</span>`:''}</h3>
+      <span class="small"><span class="muted">Purpose:</span> ${s[2]}</span>
+      <span class="small"><span class="muted">${i===3?'':'Prove:'}</span> ${s[3]}</span>
+    </button>${s[4]?`<div class="gate">Gate: <b>${s[4]}</b></div>`:''}`).join('')}
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>Product learning order</h3>
+      <span class="small muted">One area a week, in the order clients ask.</span>
+      ${checklist('learn',[
+        ['Everyday banking','Account types, packages, fees, digital, fixing common problems'],
+        ['Registered plans','TFSA, RRSP, FHSA, RESP: rules, withdrawals, who each is for'],
+        ['Credit','Cards, lines of credit, loans, how applications work'],
+        ['Savings and investments','GICs, the branch fund lineup, how risk ratings map to KYC'],
+        ['Referral products','Enough mortgage, planning and wealth to spot the need and explain the next step']
+      ],'all')}
+    </div>
+    <div class="card">
+      <h3>Cheat sheet · one page per product</h3>
+      <ol class="plain small">
+        <li>Who it’s for</li><li>Key rules and numbers</li><li>Questions that uncover the need</li><li>Which partner takes it further</li>
+      </ol>
+      <span class="small muted">Add to it every time a client asks something you couldn’t answer.</span>
+      <h3 style="margin-top:8px">FA credentials</h3>
+      <p class="small">RBC’s FA role requires the CSI Certificate in Financial Services Advice: PFSA + Financial Planning I. Ask your manager when to start; enrolling early shows you’re serious.</p>
+      ${src('fa')}
+    </div>
+  </div>`;
+
+V.logs = () => {
+  const ml = S.get('mistakes', []);
+  const rl = S.get('referrals', []);
+  const counts = {}; ml.forEach(m=>counts[m.root]=(counts[m.root]||0)+1);
+  const top = Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
+  const booked = rl.filter(r=>r.booked==='Yes').length;
+  const pOpts = Object.entries(PARTNERS).filter(([k])=>k!=='self').map(([k,p])=>`<option value="${k}">${p.name}</option>`).join('');
+  return `
+  <div class="alert warn"><b>No client names or account numbers here.</b> This page saves only in this browser on this device. Keep client identifiers in RBC systems.</div>
+
+  <div class="card">
+    <div class="card-hd"><h3>Mistake log</h3><span class="eyebrow">${ml.length} logged</span></div>
+    <span class="small muted">Mistakes in training are expected. Repeating one is what people remember. Log it so it happens once.</span>
+    ${top && top[1]>=3?`<div class="alert crit"><b>Pattern: ${esc(top[0])} (${top[1]}×).</b> Make this your focus for the next month.</div>`:''}
+    <form class="form" id="mForm">
+      <label class="wide">What happened<input id="mWhat" required placeholder="Processed a withdrawal before checking the POA"></label>
+      <label>Root cause<select id="mRoot">${CHECK_ROOTS.map(r=>`<option>${r}</option>`).join('')}</select></label>
+      <label>My rule from now on<input id="mRule" required placeholder="Open the file before touching the keyboard"></label>
+      <div class="row wide"><button class="btn pri" type="submit">Add</button></div>
+    </form>
+    ${ml.length?`<div class="tbl"><table><thead><tr><th>Date</th><th>What happened</th><th>Root cause</th><th>Rule</th><th></th></tr></thead><tbody>${ml.map((m,i)=>`<tr><td class="num">${m.d}</td><td>${esc(m.what)}</td><td class="muted">${esc(m.root)}</td><td><b>${esc(m.rule)}</b></td><td><button class="del" data-delm="${i}" aria-label="Delete">✕</button></td></tr>`).join('')}</tbody></table></div>`:`<div class="empty">No mistakes logged yet. Add the first one at end of day.</div>`}
+  </div>
+
+  <div class="card">
+    <div class="card-hd"><h3>Referral tracker</h3></div>
+    <div class="stats">
+      <div class="stat"><div class="v">${rl.length}</div><div class="l">Made</div></div>
+      <div class="stat"><div class="v">${booked}</div><div class="l">Booked</div></div>
+      <div class="stat"><div class="v">${rl.length?Math.round(booked/rl.length*100):0}%</div><div class="l">Booked rate</div></div>
+    </div>
+    <form class="form" id="rForm">
+      <label>Client signal<select id="rSig">${SIGNALS.map(s=>`<option>${esc(s[1])}</option>`).join('')}</select></label>
+      <label>Partner<select id="rPart">${pOpts}</select></label>
+      <label>Booked?<select id="rBook"><option>Yes</option><option>No</option></select></label>
+      <label>Outcome<input id="rOut" placeholder="Pending"></label>
+      <div class="row wide"><button class="btn pri" type="submit">Add</button></div>
+    </form>
+    ${rl.length?`<div class="tbl"><table><thead><tr><th>Date</th><th>Signal</th><th>Partner</th><th>Booked</th><th>Outcome</th><th></th></tr></thead><tbody>${rl.map((r,i)=>`<tr><td class="num">${r.d}</td><td>${esc(r.sig)}</td><td>${esc(PARTNERS[r.p]?PARTNERS[r.p].name:r.p)}</td><td>${r.booked}</td><td><input class="in" data-outi="${i}" value="${esc(r.out||'')}" aria-label="Outcome"></td><td><button class="del" data-delr="${i}" aria-label="Delete">✕</button></td></tr>`).join('')}</tbody></table></div>`:`<div class="empty">No referrals yet. Every booked handoff goes here.</div>`}
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-hd"><h3>This week</h3><span class="eyebrow">Resets Monday</span></div>
+      ${checklist('weekly',[
+        ['Learn one product area; add it to the cheat sheet'],
+        ['One coffee chat with an FP, IRP or mortgage specialist','Ask what makes a referral useful and what they wish branch staff asked'],
+        ['Ask your manager for one specific piece of feedback','"What’s one thing I should do differently at the counter?"'],
+        ['Review referrals: made, booked, and what happened to each']
+      ],'week')}
+    </div>
+    <div class="card">
+      <h3>Monthly</h3>
+      ${checklist('monthly',[
+        ['Update the Path tab with what you’ve learned about FAi criteria'],
+        ['Check the mistake log for patterns','Same root cause three times = next month’s focus'],
+        ['Re-run this playbook end to end']
+      ],'all')}
+    </div>
+  </div>`;
+};
+
+V.sources = () => `
+  <p class="lead">Regulator guidance, RBC’s own role postings, and practitioner sources on discovery. Your branch’s internal procedures win wherever they differ.</p>
+  <div class="card"><ul class="plain">${Object.values(SRC).map(([t,u])=>`<li><a href="${u}" target="_blank" rel="noopener">${t}</a></li>`).join('')}</ul></div>`;
+
+/* ---------- render ---------- */
+function render(){
+  nav();
+  document.getElementById('main').innerHTML = `<section role="tabpanel" aria-labelledby="tab-${tab}">${V[tab]()}</section>`;
+  const gi = document.getElementById('goalIn');
+  if(gi){ gi.addEventListener('input', e=>{ goal=e.target.value; const pos=e.target.selectionStart; render(); const n=document.getElementById('goalIn'); n.focus(); try{n.setSelectionRange(pos,pos);}catch(_){} }); }
+  const mf = document.getElementById('mForm');
+  if(mf) mf.addEventListener('submit', e=>{ e.preventDefault(); const ml=S.get('mistakes',[]); ml.unshift({d:today, what:document.getElementById('mWhat').value.trim(), root:document.getElementById('mRoot').value, rule:document.getElementById('mRule').value.trim()}); S.set('mistakes',ml); toast('Logged'); render(); });
+  const rf = document.getElementById('rForm');
+  if(rf) rf.addEventListener('submit', e=>{ e.preventDefault(); const rl=S.get('referrals',[]); rl.unshift({d:today, sig:document.getElementById('rSig').value, p:document.getElementById('rPart').value, booked:document.getElementById('rBook').value, out:document.getElementById('rOut').value.trim()}); S.set('referrals',rl); toast('Added'); render(); });
+  if(tab==='notes') updateList();
+}
+
+document.getElementById('main').addEventListener('click', e=>{
+  const t = e.target;
+  const g = t.closest('[data-goto]'); if(g){ tab=g.dataset.goto; S.set('tab',tab); render(); window.scrollTo({top:0}); return; }
+  const a = t.closest('[data-act]');
+  if(a){
+    const act=a.dataset.act;
+    if(act==='nextBridge'){ bridgeI=(bridgeI+1)%BRIDGES.length; render(); }
+    else if(act==='reset'){ resetChecks(a.dataset.id, a.dataset.scope); toast('Cleared'); }
+    else if(act==='resetFour'){ S.set('fourDone',[false,false,false,false]); render(); }
+    else if(act==='clearFlags'){ flagSel.clear(); render(); }
+    else if(act==='clearSig'){ sigSel.clear(); S.set('sigSel',[]); render(); }
+    else if(act==='randQ'){ const qs=QBANK.filter(q=>qArea==='All'||q[0]===qArea); const q=qs[Math.floor(Math.random()*qs.length)]; document.getElementById('drill').innerHTML=`<div class="bridge"><span class="eyebrow">${esc(q[0])} · say it out loud</span><q>${esc(q[1])}</q><span class="small">Now ask a follow-up to whatever they’d say.</span></div>`; }
+    else if(act==='quickBullets'){ if(!draft.raw.trim()){ toast('Write some notes first'); return; } preview = makeBullets(draft.raw); render(); }
+    else if(act==='copyAll'){ if(!notes.length){ toast('No notes yet'); return; } copy(notes.map(noteText).join('\n\n')); }
+    else if(act==='saveNote'){ saveNote(); }
+    else if(act==='discardPreview'){ preview = null; render(); }
+    else if(act==='clearDraft'){ draft = {title:'', cat:draft.cat, raw:''}; saveDraft(); preview = null; render(); }
+    else if(act==='cancelEdit'){ editingId = null; draft = {title:'', cat:draft.cat, raw:''}; saveDraft(); preview = null; render(); }
+    else if(act==='buildNote'){ const v=id=>document.getElementById(id).value.trim()||'—'; copy(`Goal (client's words): ${v('nbGoal')}\nKey date: ${v('nbDate')}\nFollow-up: ${v('nbFu')}`); }
+    return;
+  }
+  const c = t.closest('[data-copy]'); if(c){ copy(c.dataset.copy); return; }
+  const nc = t.closest('[data-ncopy]'); if(nc){ const n = notes.find(x=>x.id===nc.dataset.ncopy); if(n) copy(noteText(n)); return; }
+  const ne = t.closest('[data-nedit]'); if(ne){ const n = notes.find(x=>x.id===ne.dataset.nedit); if(n){ editingId = n.id; draft = {title:n.title, cat:n.cat, raw:n.raw||''}; preview = {b:(n.bullets||[]).join('\n'), q:(n.questions||[]).join('\n')}; render(); window.scrollTo({top:0}); } return; }
+  const nd = t.closest('[data-ndel]'); if(nd){ const id = nd.dataset.ndel; if(pendingDel===id) deleteNote(id); else { pendingDel = id; updateList(); } return; }
+  const ct = t.closest('[data-ctr]'); if(ct){ const k=ct.dataset.ctr, d=+ct.dataset.d; const c1=S.get('ctr:'+today,{bridge:0,ref:0}), w=S.get('ctrw:'+weekKey,{bridge:0,ref:0}); if(c1[k]+d<0) return; c1[k]+=d; w[k]=Math.max(0,w[k]+d); S.set('ctr:'+today,c1); S.set('ctrw:'+weekKey,w); render(); return; }
+  const f = t.closest('[data-four]'); if(f){ const d=S.get('fourDone',[false,false,false,false]); d[+f.dataset.four]=!d[+f.dataset.four]; S.set('fourDone',d); render(); return; }
+  const fl = t.closest('[data-flag]'); if(fl){ const k=fl.dataset.flag; flagSel.has(k)?flagSel.delete(k):flagSel.add(k); render(); return; }
+  const fs = t.closest('[data-flow]'); if(fs){ flowStep=+fs.dataset.flow; render(); return; }
+  const ar = t.closest('[data-area]'); if(ar){ qArea=ar.dataset.area; render(); return; }
+  const sg = t.closest('[data-sig]'); if(sg){ const i=+sg.dataset.sig; sigSel.has(i)?sigSel.delete(i):sigSel.add(i); S.set('sigSel',[...sigSel]); render(); return; }
+  const stg = t.closest('[data-stage]'); if(stg){ stageHere=+stg.dataset.stage; S.set('stageHere',stageHere); render(); return; }
+  const dm = t.closest('[data-delm]'); if(dm){ const ml=S.get('mistakes',[]); ml.splice(+dm.dataset.delm,1); S.set('mistakes',ml); render(); return; }
+  const dr = t.closest('[data-delr]'); if(dr){ const rl=S.get('referrals',[]); rl.splice(+dr.dataset.delr,1); S.set('referrals',rl); render(); return; }
+});
+document.getElementById('main').addEventListener('keydown', e=>{
+  if((e.key==='Enter'||e.key===' ') && e.target.matches('[data-four]')){ e.preventDefault(); e.target.click(); }
+});
+document.getElementById('main').addEventListener('input', e=>{
+  const id = e.target.id, v = e.target.value;
+  if(id==='nTitle'){ draft.title = v; saveDraft(); }
+  else if(id==='nCat'){ draft.cat = v; saveDraft(); }
+  else if(id==='nRaw'){ draft.raw = v; saveDraft(); }
+  else if(id==='nBul' && preview){ preview.b = v; }
+  else if(id==='nQs' && preview){ preview.q = v; }
+  else if(id==='nSearch'){ noteQ = v; pendingDel = null; updateList(); }
+  else if(id==='nFilter'){ noteCat = v; pendingDel = null; updateList(); }
+});
+document.getElementById('main').addEventListener('change', e=>{
+  if(e.target.matches('[data-outi]')){ const rl=S.get('referrals',[]); const r=rl[+e.target.dataset.outi]; if(r){ r.out=e.target.value; S.set('referrals',rl); toast('Saved'); } }
+});
+
+render();
+initNotes();
+})();
+</script>
+</body>
+</html>
