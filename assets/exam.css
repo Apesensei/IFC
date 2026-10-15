@@ -31,3 +31,8 @@ td.pass,span.pass{color:var(--good)}
 td.fail,span.fail{color:var(--bad)}
 .xreview{margin-top:16px}
 @media(max-width:560px){.xbar{top:60px}.xkeys{display:none}}
+.banks{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.bank{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 18px;display:flex;flex-direction:column;gap:5px}
+.bank .t{font-family:var(--display);font-size:19px;font-weight:600}
+.bank .m{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.bank-btns{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}

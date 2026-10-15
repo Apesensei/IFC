@@ -25,6 +25,43 @@
   function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
   function setKeys(fn) { if (keyHandler) document.removeEventListener('keydown', keyHandler); keyHandler = fn; if (fn) document.addEventListener('keydown', fn); }
 
+  /* ---------- fixed practice exams (banks) ---------- */
+  const BANKS = 5, BANKKEY = 'ifc:v2:bank:';
+  function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function sshuffle(a, r) { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; }
+  function buildBanks() {
+    const pools = {}, banks = Array.from({ length: BANKS }, () => []);
+    M.forEach(c => { const ch = window.IFC[c.n]; if (!ch || !ch.quiz) return; const t = topicOf(c.n).name; pools[t] = pools[t] || []; ch.quiz.forEach((q, i) => pools[t].push({ c: c.n, i, d: (qmeta(q) || {}).d || 2 })); });
+    const topics = T.filter(t => pools[t.name]), W = topics.reduce((s, t) => s + t.w, 0);
+    const raw = topics.map(t => { const x = 100 * t.w / W; return { t, x, f: Math.floor(x) }; });
+    let sum = raw.reduce((s, r) => s + r.f, 0);
+    raw.slice().sort((a, b) => (b.x - b.f) - (a.x - a.f)).forEach(r => { if (sum < 100) { r.f++; sum++; } });
+    raw.forEach((r, ti) => {
+      const R = rng(7919 + ti * 104729), pool = pools[r.t.name];
+      // exam-level questions first; the hardest ones are only used if a topic runs short
+      const ordered = sshuffle(pool.filter(x => x.d < 3), R).concat(sshuffle(pool.filter(x => x.d >= 3), R));
+      let k = 0;
+      for (let n = 0; n < r.f * BANKS; n++) {
+        const b = n % BANKS;
+        for (let tries = 0; tries < ordered.length; tries++, k++) {
+          const x = ordered[k % ordered.length];
+          if (!banks[b].some(y => y.c === x.c && y.i === x.i)) { banks[b].push(x); k++; break; }
+        }
+      }
+    });
+    return banks;
+  }
+  function startBank(b, mode, btn) {
+    btn.disabled = true; btn.textContent = 'Loading…';
+    const chs = M.map(c => c.n);
+    loadChapters(chs).then(() => {
+      const qs = shuffled(buildBanks()[b]).map(x => { const q = window.IFC[x.c].quiz[x.i], base = q[1].map((_, j) => j); return { c: x.c, i: x.i, p: canShuffleOpts(q) ? shuffled(base) : base }; });
+      const timed = mode === 'exam';
+      const st = { qs, ans: {}, flag: {}, cur: 0, timed, mode, bank: b, total: qs.length * SEC_PER_Q, left: qs.length * SEC_PER_Q, chs, started: Date.now() };
+      store.set(SAVE, st); run(st);
+    });
+  }
+
   /* ---------- sampling ---------- */
   function sample(chs, N) {
     const pools = {};
@@ -79,8 +116,22 @@
       d.addEventListener('click', () => { store.del(SAVE); setup(); });
       const bx = el('span', 'sbtns'); bx.append(r, d); b.appendChild(bx); app.appendChild(b);
     }
-    const s1 = el('section'); s1.appendChild(el('h2', null, '1 · Pick chapters'));
-    s1.appendChild(el('p', 'sub', 'Tick the chapters you have studied. Topic weights are from the official CSI exam outline.'));
+    const sb = el('section'); sb.appendChild(el('h2', null, 'Practice exams'));
+    sb.appendChild(el('p', 'sub', 'Five fixed 100-question exams, each split across the topics like the real exam. The questions and options reshuffle every attempt. Training mode shows the answer and the working right after each question. Exam mode is timed (3 hours) with feedback at the end.'));
+    const grid = el('div', 'banks');
+    for (let b = 0; b < BANKS; b++) {
+      const rec = store.get(BANKKEY + b, null);
+      const card = el('div', 'bank');
+      card.innerHTML = `<span class="t">Practice Exam ${b + 1}</span><span class="m">100 questions${rec ? ` · last ${rec.last}% · best ${rec.best}%` : ''}</span>`;
+      const row = el('div', 'bank-btns');
+      const tr = el('button', 'primary sm', 'Training'), ex = el('button', 'sm', 'Exam · 3 h');
+      tr.addEventListener('click', () => startBank(b, 'train', tr));
+      ex.addEventListener('click', () => startBank(b, 'exam', ex));
+      row.append(tr, ex); card.appendChild(row); grid.appendChild(card);
+    }
+    sb.appendChild(grid); app.appendChild(sb);
+    const s1 = el('section'); s1.appendChild(el('h2', null, 'Or build your own'));
+    s1.appendChild(el('p', 'sub', 'Tick the chapters you want. Questions are drawn at random, split by the official topic weights.'));
     const pre = el('div', 'qtools');
     const sel = new Set((prefs.chs || []).filter(n => M.some(c => c.n === n)));
     const boxes = {};
@@ -102,13 +153,15 @@
     });
     app.appendChild(s1);
 
-    const s2 = el('section'); s2.appendChild(el('h2', null, '2 · Length and timing'));
+    const s2 = el('section'); s2.appendChild(el('h2', null, 'Length and mode'));
     s2.appendChild(el('p', 'sub', 'The real exam is 100 questions in 3 hours (1.8 minutes each).'));
     const lenSeg = el('div', 'seg'); let N = prefs.n || 50;
     [25, 50, 100].forEach(v => { const b = el('button', v === N ? 'on' : null, v + ' questions'); b.addEventListener('click', () => { N = v; [...lenSeg.children].forEach(x => x.classList.toggle('on', x === b)); sync(); }); lenSeg.appendChild(b); });
-    const timeSeg = el('div', 'seg'); let timed = prefs.timed !== false;
+    const modeSeg = el('div', 'seg'); let mode = prefs.mode || 'exam';
+    [['Exam mode', 'exam'], ['Training mode', 'train']].forEach(o => { const b = el('button', o[1] === mode ? 'on' : null, o[0]); b.addEventListener('click', () => { mode = o[1]; [...modeSeg.children].forEach(x => x.classList.toggle('on', x === b)); timeSeg.hidden = mode === 'train'; sync(); }); modeSeg.appendChild(b); });
+    const timeSeg = el('div', 'seg'); let timed = prefs.timed !== false; timeSeg.hidden = mode === 'train';
     [['Timed', true], ['Untimed', false]].forEach(o => { const b = el('button', o[1] === timed ? 'on' : null, o[0]); b.addEventListener('click', () => { timed = o[1]; [...timeSeg.children].forEach(x => x.classList.toggle('on', x === b)); sync(); }); timeSeg.appendChild(b); });
-    const row = el('div', 'qtools'); row.append(lenSeg, timeSeg); s2.appendChild(row);
+    const row = el('div', 'qtools'); row.append(lenSeg, modeSeg, timeSeg); s2.appendChild(row);
     const info = el('p', 'xinfo'); s2.appendChild(info);
     const go = el('button', 'primary big-btn', 'Start exam'); s2.appendChild(go);
     app.appendChild(s2);
@@ -117,17 +170,17 @@
       Object.keys(boxes).forEach(n => { boxes[n].checked = sel.has(+n); });
       const pool = M.filter(c => sel.has(c.n)).reduce((s, c) => s + (c.quiz || 0), 0);
       const n = Math.min(N, pool);
-      info.innerHTML = sel.size ? `Pool: <b>${pool}</b> questions from <b>${sel.size}</b> chapter${sel.size > 1 ? 's' : ''}. This exam: <b>${n}</b> questions${timed ? `, <b>${fmtTime(n * SEC_PER_Q)}</b> on the clock` : ', untimed'}.` : 'Pick at least one chapter.';
+      info.innerHTML = sel.size ? `Pool: <b>${pool}</b> questions from <b>${sel.size}</b> chapter${sel.size > 1 ? 's' : ''}. This exam: <b>${n}</b> questions${mode === 'train' ? ', training mode (answer and working after each question)' : timed ? `, <b>${fmtTime(n * SEC_PER_Q)}</b> on the clock` : ', untimed'}.` : 'Pick at least one chapter.';
       go.disabled = !sel.size;
     }
     go.addEventListener('click', () => {
       const chs = [...sel].sort((a, b) => a - b);
-      store.set(PREF, { n: N, timed, chs });
+      store.set(PREF, { n: N, timed, mode, chs });
       go.disabled = true; go.textContent = 'Loading questions…';
       loadChapters(chs).then(() => {
         const qs = sample(chs, N);
         if (!qs.length) { go.textContent = 'No questions found'; return; }
-        const st = { qs, ans: {}, flag: {}, cur: 0, timed, total: qs.length * SEC_PER_Q, left: qs.length * SEC_PER_Q, chs, started: Date.now() };
+        const st = { qs, ans: {}, flag: {}, cur: 0, timed: mode === 'exam' && timed, mode, total: qs.length * SEC_PER_Q, left: qs.length * SEC_PER_Q, chs, started: Date.now() };
         store.set(SAVE, st); run(st);
       });
     });
@@ -136,7 +189,7 @@
     const hist = store.get(HIST, []);
     if (hist.length) {
       const s3 = el('section'); s3.appendChild(el('h2', null, 'Past attempts on this device'));
-      const rows = hist.slice().reverse().map(h => `<tr><td>${new Date(h.d).toLocaleDateString('en-CA', { month: 'short', day: 'numeric' })}</td><td class="num">${h.c} / ${h.N}</td><td class="num">${h.pct}%</td><td>${h.pct >= 60 ? '<span class="pass">Pass</span>' : '<span class="fail">Below 60%</span>'}</td><td>${h.chs.length} ch</td></tr>`).join('');
+      const rows = hist.slice().reverse().map(h => `<tr><td>${new Date(h.d).toLocaleDateString('en-CA', { month: 'short', day: 'numeric' })}</td><td class="num">${h.c} / ${h.N}</td><td class="num">${h.pct}%</td><td>${h.pct >= 60 ? '<span class="pass">Pass</span>' : '<span class="fail">Below 60%</span>'}</td><td>${h.label || h.chs.length + ' ch'}</td></tr>`).join('');
       s3.appendChild(el('div', 'tblwrap', `<table><thead><tr><th>Date</th><th>Score</th><th>%</th><th>Result</th><th>Scope</th></tr></thead><tbody>${rows}</tbody></table>`));
       app.appendChild(s3);
     }
@@ -169,22 +222,28 @@
     function draw() {
       const k = st.cur, q = getQ(k), perm = st.qs[k].p;
       const answered = Object.keys(st.ans).length, flagged = Object.keys(st.flag).filter(x => st.flag[x]).length;
-      pos.innerHTML = `Q <b>${k + 1}</b> / ${Nq} · ${answered} answered${flagged ? ` · ${flagged} flagged` : ''}`;
+      const train = st.mode === 'train', done = train && st.ans[k] != null;
+      const right = train ? Object.keys(st.ans).filter(j => st.ans[j] === getQ(+j)[2]).length : 0;
+      pos.innerHTML = `Q <b>${k + 1}</b> / ${Nq} · ${train ? `<b>${right}</b> right of ${answered}` : `${answered} answered`}${flagged ? ` · ${flagged} flagged` : ''}`;
       qbox.innerHTML = '';
-      qbox.appendChild(el('div', 'qn', `<span>Question ${k + 1} of ${Nq}</span>${st.flag[k] ? '<span class="badge t-except">Flagged</span>' : ''}`));
+      qbox.appendChild(el('div', 'qn', `<span>Question ${k + 1} of ${Nq}${train ? ` · Chapter ${st.qs[k].c}` : ''}</span>${st.flag[k] ? '<span class="badge t-except">Flagged</span>' : ''}`));
       qbox.appendChild(el('p', 'qt', q[0]));
       const ol = el('div', 'opts');
       perm.forEach((oi, p) => {
-        const b = el('button', 'opt' + (st.ans[k] === oi ? ' sel' : ''), `<span class="k">${KEYS[p]}</span><span>${q[1][oi]}</span>`);
-        b.addEventListener('click', () => pick(oi));
+        let cls = 'opt';
+        if (done) { if (oi === q[2]) cls += ' correct'; else if (oi === st.ans[k]) cls += ' wrong'; }
+        else if (st.ans[k] === oi) cls += ' sel';
+        const b = el('button', cls, `<span class="k">${KEYS[p]}</span><span>${q[1][oi]}</span>`);
+        if (done) b.disabled = true; else b.addEventListener('click', () => pick(oi));
         ol.appendChild(b);
       });
       qbox.appendChild(ol);
+      if (done) qbox.appendChild(el('div', 'expl', `<b>${st.ans[k] === q[2] ? 'Correct.' : 'Answer: ' + KEYS[perm.indexOf(q[2])] + '.'}</b> ${q[3]}`));
       prev.disabled = k === 0; next.textContent = k === Nq - 1 ? 'Review & submit' : 'Next →';
       flagB.classList.toggle('on', !!st.flag[k]); flagB.textContent = st.flag[k] ? '⚑ Flagged' : '⚑ Flag';
       if (!grid.hidden) drawGrid();
     }
-    function pick(oi) { st.ans[st.cur] = oi; save(); draw(); }
+    function pick(oi) { if (st.mode === 'train' && st.ans[st.cur] != null) return; st.ans[st.cur] = oi; save(); draw(); }
     function move(d) {
       if (d > 0 && st.cur === Nq - 1) { askSubmit(); return; }
       st.cur = Math.max(0, Math.min(Nq - 1, st.cur + d)); save(); confirmBox.hidden = true; draw();
@@ -229,7 +288,7 @@
         if (st.left <= 0) finish();
       };
       tickT(); timer = setInterval(tickT, 1000);
-    } else clock.textContent = 'Untimed';
+    } else clock.textContent = st.mode === 'train' ? 'Training mode' : 'Untimed';
     draw();
   }
 
@@ -240,9 +299,11 @@
     const getQ = k => window.IFC[st.qs[k].c].quiz[st.qs[k].i];
     const right = k => st.ans[k] === getQ(k)[2];
     const c = st.qs.filter((_, k) => right(k)).length, pct = Math.round(c / Nq * 100);
-    const hist = store.get(HIST, []); hist.push({ d: Date.now(), N: Nq, c, pct, chs: st.chs }); store.set(HIST, hist.slice(-15));
+    const hist = store.get(HIST, []); const label = (st.bank != null ? `Practice Exam ${st.bank + 1}` : `${st.chs.length} ch`) + (st.mode === 'train' ? ' (training)' : '');
+    hist.push({ d: Date.now(), N: Nq, c, pct, chs: st.chs, label });
+    if (st.bank != null) { const bk = BANKKEY + st.bank, r = store.get(bk, {}); store.set(bk, { last: pct, best: Math.max(r.best || 0, pct), n: (r.n || 0) + 1 }); } store.set(HIST, hist.slice(-15));
     const hero = el('div', 'hero');
-    hero.innerHTML = `<p class="eyebrow">Mock exam result</p><div class="qr-head"><div class="big ${pct >= 60 ? 'pass' : 'fail'}">${pct}%</div><div><b>${c} of ${Nq} correct.</b> ${pct >= 60 ? 'Pass: above the 60% mark.' : 'Below the 60% pass mark.'}<br>Time used: ${fmtTime(st.used || 0)}${st.timed ? ` of ${fmtTime(st.total)}` : ''}.</div></div>`;
+    hero.innerHTML = `<p class="eyebrow">${st.bank != null ? `Practice Exam ${st.bank + 1}` : 'Mock exam'}${st.mode === 'train' ? ' · training mode' : ''} · result</p><div class="qr-head"><div class="big ${pct >= 60 ? 'pass' : 'fail'}">${pct}%</div><div><b>${c} of ${Nq} correct.</b> ${pct >= 60 ? 'Pass: above the 60% mark.' : 'Below the 60% pass mark.'}<br>Time used: ${fmtTime(st.used || 0)}${st.timed ? ` of ${fmtTime(st.total)}` : ''}.</div></div>`;
     app.appendChild(hero);
     const tally = keyFn => { const m = {}; st.qs.forEach((x, k) => { const key = keyFn(x, k); if (key == null) return; m[key] = m[key] || [0, 0]; m[key][1]++; if (right(k)) m[key][0]++; }); return m; };
     const rowsOf = (m, order, label) => order.filter(k => m[k]).map(k => `<tr><td>${label(k)}</td><td class="num">${m[k][0]} / ${m[k][1]}</td><td class="num ${m[k][0] / m[k][1] >= 0.6 ? 'pass' : 'fail'}">${Math.round(m[k][0] / m[k][1] * 100)}%</td></tr>`).join('');
@@ -263,7 +324,7 @@
     again.addEventListener('click', setup);
     same.addEventListener('click', () => {
       const qs = shuffled(st.qs).map(x => ({ c: x.c, i: x.i, p: canShuffleOpts(window.IFC[x.c].quiz[x.i]) ? shuffled(x.p) : x.p }));
-      const ns = { qs, ans: {}, flag: {}, cur: 0, timed: st.timed, total: qs.length * SEC_PER_Q, left: qs.length * SEC_PER_Q, chs: st.chs, started: Date.now() };
+      const ns = { qs, ans: {}, flag: {}, cur: 0, timed: st.timed, mode: st.mode, bank: st.bank, total: qs.length * SEC_PER_Q, left: qs.length * SEC_PER_Q, chs: st.chs, started: Date.now() };
       store.set(SAVE, ns); run(ns);
     });
     acts.append(again, same); s1.appendChild(acts);
