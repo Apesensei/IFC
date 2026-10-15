@@ -17,7 +17,7 @@
     window.IFC = window.IFC || {};
     return Promise.all(ns.map(n => new Promise(res => {
       if (window.IFC[n]) return res();
-      const s = document.createElement('script'); s.src = 'data/ch' + n + '.js';
+      const s = document.createElement('script'); s.src = 'data/ch' + n + '.js?v=' + (window.IFC_V || '');
       s.onload = () => res(); s.onerror = () => res();
       document.head.appendChild(s);
     })));
