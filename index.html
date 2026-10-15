@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>IFC Exam Drill</title>
-<meta name="description" content="Condensed Investment Funds in Canada chapter notes, flashcards and practice quizzes.">
+<meta name="description" content="Investment Funds in Canada exam prep: condensed chapter notes, calculation drills, flashcards, exam-style quizzes and a timed mock exam.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📘</text></svg>">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
 <link rel="stylesheet" href="assets/style.css">
@@ -12,32 +12,57 @@
 <body>
 <header class="top"><div class="topin">
   <a class="brand" href="index.html">IFC Exam Drill<span>Investment Funds in Canada</span></a>
+  <nav class="jump"><a class="ext" href="exam.html">Mock exam</a></nav>
 </div></header>
 <div class="wrap">
   <div class="hero">
     <p class="eyebrow">Canadian Securities Institute · IFC</p>
     <h1>Chapter drills</h1>
-    <p class="lede">Condensed notes, recall cards and exam-style questions — one module per chapter. Read the core once, then drill until you miss nothing.</p>
+    <p class="lede">One module per chapter: the must-know notes, every number, calculation drills, recall cards and exam-style questions. Read the core once, then drill until you miss nothing.</p>
+    <p class="examnote">The real exam: <b>100 multiple-choice questions, 3 hours, 60% to pass.</b> Chapters are grouped below by the official exam topics, with each topic's share of the exam.</p>
+    <a class="cta" href="exam.html"><span><span class="t">Timed mock exam</span><br><span class="m">Questions drawn from every built chapter, weighted like the real exam. Scored by topic.</span></span><span class="go">Start →</span></a>
   </div>
   <section>
     <h2>Chapters</h2>
-    <p class="sub">More appear here as each chapter is built</p>
-    <div class="chlist" id="list"></div>
+    <p class="sub">Your progress is saved on this device</p>
+    <div id="list"></div>
   </section>
   <footer id="foot">Study aid only — not a substitute for the official CSI text.</footer>
 </div>
 <script src="data/manifest.js"></script>
 <script>
 (function(){
-  var l=document.getElementById('list');
-  (window.IFC_MANIFEST||[]).forEach(function(c){
-    var a=document.createElement('a');
-    a.className='chcard'+(c.ready?'':' soon');
-    a.href=c.ready?('chapter.html?ch='+c.n):'#';
-    a.innerHTML='<span class="n">'+(c.section||'')+' · Chapter '+c.n+'</span>'+
-                '<span class="t">'+c.title+'</span>'+
-                '<span class="m">'+(c.ready?(c.meta||'ready'):'not built yet')+'</span>';
-    l.appendChild(a);
+  function get(k){ try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch (e) { return null; } }
+  var list = document.getElementById('list');
+  var M = window.IFC_MANIFEST || [], T = window.IFC_TOPICS || [];
+  var byN = {}; M.forEach(function(c){ byN[c.n] = c; });
+  var groups = T.length ? T : [{ name: 'All chapters', ch: M.map(function(c){ return c.n; }), w: null }];
+  groups.forEach(function(t){
+    var chs = t.ch.map(function(n){ return byN[n]; }).filter(Boolean);
+    if (!chs.length) return;
+    var g = document.createElement('div'); g.className = 'topic';
+    g.innerHTML = '<h3><span>' + t.name + '</span>' + (t.w ? '<span class="w">' + t.w + '% of exam</span>' : '') + '</h3>';
+    var grid = document.createElement('div'); grid.className = 'chlist';
+    chs.forEach(function(c){
+      var a = document.createElement('a');
+      a.className = 'chcard' + (c.ready ? '' : ' soon');
+      a.href = c.ready ? ('chapter.html?ch=' + c.n) : '#';
+      var p = c.ready ? get('ifc:v2:prog:' + c.n) : null, prog = '';
+      if (p) {
+        var bits = [];
+        if (p.best != null) bits.push('quiz best ' + p.best + '%');
+        if (p.known) bits.push(p.known + '/' + (p.cards || c.cards) + ' cards');
+        if (p.solved) bits.push(p.solved + '/' + (p.drills || c.drills) + ' drills');
+        var done = (p.known || 0) + (p.solved || 0), tot = (p.cards || c.cards || 0) + (p.drills || c.drills || 0);
+        var pct = tot ? Math.round(done / tot * 100) : 0;
+        if (bits.length) prog = '<span class="bar"><i style="width:' + pct + '%"></i></span><span class="p">' + bits.join(' · ') + '</span>';
+      }
+      a.innerHTML = '<span class="n">' + (c.section || '') + ' · Chapter ' + c.n + '</span>' +
+        '<span class="t">' + c.title + '</span>' +
+        '<span class="m">' + (c.ready ? (c.meta || 'ready') : 'not built yet') + '</span>' + prog;
+      grid.appendChild(a);
+    });
+    g.appendChild(grid); list.appendChild(g);
   });
 })();
 </script>
