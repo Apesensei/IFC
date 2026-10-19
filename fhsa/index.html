@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>FHSA Branch Huddle</title>
+<meta name="description" content="FHSA presentation for the morning branch huddle, with speaker notes.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230e2a47'/><path d='M20 52 50 26l30 26v28H20z' fill='none' stroke='%23f2c230' stroke-width='8' stroke-linejoin='round'/></svg>">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--bar:#0b1f35;--ink:#e9eef5;--muted:#9fb0c6;--gold:#f2c230}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#0b1f35;color:var(--ink);font-family:'Public Sans',Arial,sans-serif;overflow:hidden}
+.app{position:fixed;inset:0;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.top{display:flex;align-items:center;gap:10px;padding:8px 14px;font-size:13px;color:var(--muted)}
+.top a{color:var(--muted);text-decoration:none}
+.top a:hover{color:var(--ink)}
+.top .t{margin-right:auto;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.main{flex:1;display:flex;min-height:0}
+.viewport{flex:1;position:relative;min-width:0;min-height:0;overflow:hidden}
+.stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.slide{position:absolute;inset:0;width:1920px;height:1080px;overflow:hidden}
+.slide:not(.on){display:none!important}
+.slide *{margin:0;box-sizing:border-box}
+.slide h1,.slide h2,.slide h3{font-weight:inherit}
+.slide ul,.slide ol{padding-left:1.2em}
+.slide table{border-collapse:separate;border-spacing:0;width:100%;overflow:hidden}
+.slide th,.slide td{text-align:left;padding:18px 24px;vertical-align:top}
+.slide th{font-weight:700}
+.slide.on.fx{animation:fade .45s ease}
+.slide.on.fxpush{animation:push .5s cubic-bezier(.2,.7,.2,1)}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes push{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:none}}
+[data-build-in]{opacity:0}
+[data-build-in].bi{animation-fill-mode:both;animation-duration:.55s;animation-timing-function:cubic-bezier(.2,.7,.2,1)}
+[data-build-in].bi.rise{animation-name:rise}
+[data-build-in].bi.fade{animation-name:fade}
+[data-build-in].bi.pop{animation-name:pop}
+@keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.85)}70%{opacity:1;transform:scale(1.04)}100%{opacity:1;transform:none}}
+.notes{width:min(420px,38vw);background:#10263f;border-left:1px solid #1d3654;overflow:auto;padding:16px 18px;font-size:15px;line-height:1.55;white-space:pre-wrap;color:#dbe4ef}
+.notes h4{margin:0 0 8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.bar{display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 14px}
+button{font:inherit;font-size:14px;font-weight:600;color:var(--ink);background:#173250;border:1px solid #24486f;border-radius:6px;padding:8px 14px;cursor:pointer}
+button:hover{background:#1d3e63}
+button.on{background:var(--gold);color:#0e2a47;border-color:var(--gold)}
+.cnt{font-variant-numeric:tabular-nums;font-size:13px;color:var(--muted);min-width:64px;text-align:center}
+@media (max-width:760px){
+  .main{flex-direction:column}
+  .notes{width:auto;max-height:42vh;border-left:0;border-top:1px solid #1d3654}
+  .top .hide-sm{display:none}
+}
+.app.full .top,.app.full .bar{display:none}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="top">
+    <a href="../index.html">← IFC</a>
+    <span class="t">FHSA Branch Huddle</span>
+    <span class="hide-sm">← → to move · N notes · F fullscreen</span>
+  </div>
+  <div class="main">
+    <div class="viewport" id="vp"><div class="stage" id="stage">
+<section class="slide" id="cover" data-transition="fade" style="display:flex; flex-direction:column; justify-content:space-between; padding:128px; background:#0e2a47">
+  <p style="font-family:'Public Sans', Arial, sans-serif; font-size:24px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:#f2c230">Morning huddle · October 2026</p>
+  <div style="width:1000px; display:flex; flex-direction:column; gap:32px">
+    <h1 style="font-family:'Public Sans', Arial, sans-serif; font-size:120px; font-weight:800; line-height:1.05; letter-spacing:-2px; color:#f6f4ee">The First Home<br>Savings Account</h1>
+    <p style="font-family:'Public Sans', Arial, sans-serif; font-size:44px; line-height:1.3; color:#c9d4e3">What it is, who qualifies, and how to bring it up with clients</p>
+  </div>
+  <div style="display:flex; flex-direction:row; gap:48px; align-items:end; justify-content:space-between">
+    <p style="font-family:'Public Sans', Arial, sans-serif; font-size:24px; color:#9fb0c6">Sources: RBC Royal Bank FHSA page · Canada Revenue Agency</p>
+  </div>
+  <iframe class="emb" style="position:absolute; top:170px; left:1200px; width:560px; height:640px;border:0" srcdoc="&lt;!doctype html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;style&gt;
+html,body{margin:0;height:100%;background:transparent;overflow:hidden}
+body{font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif}
+svg{position:absolute;left:0;top:0;width:100%;height:100%}
+#amt{position:absolute;left:0;right:0;top:57%;text-align:center;color:#F6F4EE;font-weight:800;font-size:64px;letter-spacing:-1px;font-variant-numeric:tabular-nums}
+#tag{position:absolute;left:0;right:0;top:72%;text-align:center;color:#FFE08A;font-weight:700;font-size:24px;letter-spacing:5px;opacity:0}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;svg viewBox=&quot;0 0 560 640&quot; preserveAspectRatio=&quot;xMidYMid meet&quot;&gt;
+&lt;defs&gt;
+&lt;clipPath id=&quot;c&quot;&gt;&lt;path d=&quot;M100 286 L280 122 L460 286 L460 560 L100 560 Z&quot;/&gt;&lt;/clipPath&gt;
+&lt;linearGradient id=&quot;g&quot; x1=&quot;0&quot; y1=&quot;1&quot; x2=&quot;0&quot; y2=&quot;0&quot;&gt;&lt;stop offset=&quot;0&quot; stop-color=&quot;#1F5FA8&quot;/&gt;&lt;stop offset=&quot;1&quot; stop-color=&quot;#4A8FE0&quot;/&gt;&lt;/linearGradient&gt;
+&lt;/defs&gt;
+&lt;g clip-path=&quot;url(#c)&quot;&gt;&lt;path id=&quot;w&quot; fill=&quot;url(#g)&quot; d=&quot;&quot;/&gt;&lt;/g&gt;
+&lt;path id=&quot;h&quot; d=&quot;M50 300 L280 92 L510 300 M100 262 L100 560 L460 560 L460 262&quot; fill=&quot;none&quot; stroke=&quot;#F2C230&quot; stroke-width=&quot;9&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;
+&lt;path id=&quot;b&quot; d=&quot;M60 600 L500 600&quot; stroke=&quot;#F2C230&quot; stroke-width=&quot;4&quot; stroke-linecap=&quot;round&quot; opacity=&quot;0.5&quot;/&gt;
+&lt;/svg&gt;
+&lt;div id=&quot;amt&quot;&gt;$0&lt;/div&gt;&lt;div id=&quot;tag&quot;&gt;TAX-FREE&lt;/div&gt;
+&lt;script&gt;
+(function(){
+var h=document.getElementById(&#x27;h&#x27;),w=document.getElementById(&#x27;w&#x27;),b=document.getElementById(&#x27;b&#x27;),amt=document.getElementById(&#x27;amt&#x27;),tag=document.getElementById(&#x27;tag&#x27;);
+var L=h.getTotalLength(),LB=b.getTotalLength();h.style.strokeDasharray=L;b.style.strokeDasharray=LB;
+var start=null,last=0;
+function cl(x){return Math.max(0,Math.min(1,x))}
+function eio(x){return x&lt;.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2}
+function eo(x){return 1-Math.pow(1-x,3)}
+function draw(t){
+var d=eio(cl(t/1.3));h.style.strokeDashoffset=L*(1-d);b.style.strokeDashoffset=LB*(1-eo(cl((t-0.4)/1.2)));
+var p=eo(cl((t-1.0)/2.4)),top=560-(560-150)*p,amp=p&gt;0?5+5*(1-p):0,ph=t*2.1,s=&#x27;M90 610 L90 &#x27;+top.toFixed(1);
+for(var x=90;x&lt;=470;x+=10){s+=&#x27; L&#x27;+x+&#x27; &#x27;+(top+Math.sin(x/36+ph)*amp+Math.sin(x/17-ph*1.3)*amp*0.35).toFixed(1);}
+w.setAttribute(&#x27;d&#x27;,s+&#x27; L470 610 Z&#x27;);
+amt.textContent=&#x27;$&#x27;+Math.round(40000*p/100)*100;amt.textContent=amt.textContent.replace(/\B(?=(\d{3})+(?!\d))/g,&#x27;,&#x27;);
+var tp=cl((t-3.2)/0.6);tag.style.opacity=tp;tag.style.transform=&#x27;translateY(&#x27;+(12*(1-eo(tp))).toFixed(1)+&#x27;px)&#x27;;
+}
+function f(ts){if(start===null||ts-last&gt;400)start=ts;last=ts;draw((ts-start)/1000);requestAnimationFrame(f);}
+requestAnimationFrame(f);
+})();
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;" scrolling="no" tabindex="-1"></iframe>
+  
+</section>
+<section class="slide" id="idea" data-transition="push" style="background:#1F5FA8;color:#F6F4EE;font-family:'Public Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:64px">
+<p style="font-size:24px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#FFE08A">The one-line pitch</p>
+<h1 style="font-size:88px;font-weight:800;line-height:1.1;letter-spacing:-1px;color:#F6F4EE">A tax deduction on the way in.<br>Tax-free on the way out.</h1>
+<div data-build-in="rise order 1 auto" style="position:absolute;left:128px;top:680px;width:522px;display:flex;flex-direction:column;gap:12px;border-top:3px solid #FFE08A;padding:24px 0px 0px 0px">
+<p style="font-size:24px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FFE08A">1 · Going in</p>
+<p style="font-size:32px;line-height:1.35;color:#F6F4EE">Every contribution is tax-deductible, just like an RRSP</p>
+</div>
+<div data-build-in="rise order 2 auto" style="position:absolute;left:699px;top:680px;width:522px;display:flex;flex-direction:column;gap:12px;border-top:3px solid #FFE08A;padding:24px 0px 0px 0px">
+<p style="font-size:24px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FFE08A">2 · While invested</p>
+<p style="font-size:32px;line-height:1.35;color:#F6F4EE">Interest, dividends and gains are never taxed</p>
+</div>
+<div data-build-in="rise order 3 auto" style="position:absolute;left:1270px;top:680px;width:522px;display:flex;flex-direction:column;gap:12px;border-top:3px solid #FFE08A;padding:24px 0px 0px 0px">
+<p style="font-size:24px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FFE08A">3 · Coming out</p>
+<p style="font-size:32px;line-height:1.35;color:#F6F4EE">Tax-free for a first home, like a TFSA, and never paid back</p>
+</div>
+
+</section>
+<section class="slide" id="eligibility" data-transition="fade" style="background:#F6F4EE;color:#0E2A47;font-family:'Public Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#1F5FA8">Eligibility</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px;color:#0E2A47">Who can open one</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+<div style="display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #DDD8CC;border-radius:16px;padding:36px">
+<div style="display:flex;flex-direction:row;align-items:center;gap:16px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#1F5FA8;width:44px;height:44px" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+<h3 style="font-size:40px;font-weight:700;line-height:1.2;color:#0E2A47">Adult, 71 or younger</h3>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#4A5568">At least 18 and the age of majority in their province (19 here in Nova Scotia), and no older than 71 at Dec 31 of the year opened</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #DDD8CC;border-radius:16px;padding:36px">
+<div style="display:flex;flex-direction:row;align-items:center;gap:16px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#1F5FA8;width:44px;height:44px" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+<h3 style="font-size:40px;font-weight:700;line-height:1.2;color:#0E2A47">Canadian resident</h3>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#4A5568">Resident of Canada with a Social Insurance Number</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #DDD8CC;border-radius:16px;padding:36px">
+<div style="display:flex;flex-direction:row;align-items:center;gap:16px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#1F5FA8;width:44px;height:44px" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/></svg>
+<h3 style="font-size:40px;font-weight:700;line-height:1.2;color:#0E2A47">First-time buyer</h3>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#4A5568">Hasn’t lived in a home they owned, this year or in the previous 4 calendar years</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #DDD8CC;border-radius:16px;padding:36px">
+<div style="display:flex;flex-direction:row;align-items:center;gap:16px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#1F5FA8;width:44px;height:44px" aria-hidden="true"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 21 2M16 7l3 3M18 5l2 2"/></svg>
+<h3 style="font-size:40px;font-weight:700;line-height:1.2;color:#0E2A47">The spouse rule</h3>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#4A5568">Also hasn’t lived in a home their spouse or common-law partner owned in that same window</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1200px;font-size:24px;color:#6B7280">First Home Savings Account · Morning huddle</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;color:#6B7280;text-align:right">03</p>
+
+</section>
+<section class="slide" id="numbers" data-transition="fade" style="background:#F6F4EE;color:#0E2A47;font-family:'Public Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:space-between;gap:48px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#1F5FA8">Limits</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px;color:#0E2A47">The four numbers to know</h2>
+</div>
+<div style="display:flex;flex-direction:row;align-items:center;gap:24px;background:#0E2A47;border-radius:16px;padding:32px 40px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#F2C230;width:48px;height:48px" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+<p style="font-size:32px;line-height:1.4;color:#F6F4EE"><b>Room only starts the year the account is opened, not at age 18.</b> Open early, even with $0 in it.</p>
+</div>
+<iframe class="emb" style="position:absolute;left:128px;top:296px;width:1664px;height:330px;border:0" srcdoc="&lt;!doctype html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;style&gt;
+html,body{margin:0;height:100%;background:transparent;overflow:hidden}
+body{font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif}
+.row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;height:100%;box-sizing:border-box;padding:4px 2px}
+.t{background:#FDFCF9;border:1px solid #DDD8CC;border-radius:16px;padding:30px 30px 28px;display:flex;flex-direction:column;gap:10px;box-sizing:border-box;opacity:0}
+.n{font-size:72px;font-weight:800;letter-spacing:-1px;color:#1F5FA8;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.u{height:5px;width:0;background:#F2C230;border-radius:3px}
+.l{font-size:26px;line-height:1.35;color:#4A5568;margin-top:6px}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=&quot;row&quot; id=&quot;r&quot;&gt;&lt;/div&gt;
+&lt;script&gt;
+(function(){
+var D=[[8000,&#x27;$&#x27;,&#x27;&#x27;,&#x27;A year, contributions and RRSP transfers combined&#x27;],[40000,&#x27;$&#x27;,&#x27;&#x27;,&#x27;Lifetime limit, across all of a client’s FHSAs&#x27;],[16000,&#x27;$&#x27;,&#x27;&#x27;,&#x27;Most in one year: $8,000 plus up to $8,000 carried forward&#x27;],[15,&#x27;&#x27;,&#x27; yrs&#x27;,&#x27;Max account life, or until the year they turn 71 if sooner&#x27;]];
+var r=document.getElementById(&#x27;r&#x27;),T=[];
+D.forEach(function(d){var t=document.createElement(&#x27;div&#x27;);t.className=&#x27;t&#x27;;t.innerHTML=&#x27;&lt;div class=&quot;n&quot;&gt;&lt;/div&gt;&lt;div class=&quot;u&quot;&gt;&lt;/div&gt;&lt;div class=&quot;l&quot;&gt;&lt;/div&gt;&#x27;;t.children[2].textContent=d[3];r.appendChild(t);T.push(t);});
+function cl(x){return Math.max(0,Math.min(1,x))}
+function eo(x){return 1-Math.pow(1-x,4)}
+function bk(x){var c=1.6;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)}
+function fm(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,&#x27;,&#x27;)}
+var start=null,last=0;
+function draw(t){T.forEach(function(e,i){var s=t-0.15-i*0.22,a=cl(s/0.55),c=eo(cl((s-0.1)/1.3)),d=D[i];
+e.style.opacity=a;e.style.transform=&#x27;translateY(&#x27;+(28*(1-bk(a))).toFixed(1)+&#x27;px)&#x27;;
+var v=d[0]*c;v=d[0]&gt;100?Math.round(v/100)*100:Math.round(v);
+e.children[0].textContent=d[1]+fm(v)+d[2];e.children[1].style.width=(64*eo(cl((s-1.0)/0.6)))+&#x27;px&#x27;;
+e.style.boxShadow=&#x27;0 &#x27;+(6+3*Math.sin(t*1.4+i)).toFixed(1)+&#x27;px 18px rgba(14,42,71,&#x27;+(0.05*a).toFixed(3)+&#x27;)&#x27;;});}
+function f(ts){if(start===null||ts-last&gt;400)start=ts;last=ts;draw((ts-start)/1000);requestAnimationFrame(f);}
+requestAnimationFrame(f);
+})();
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;" scrolling="no" tabindex="-1"></iframe>
+<p style="position:absolute;left:128px;bottom:64px;width:1200px;font-size:24px;color:#6B7280">First Home Savings Account · Morning huddle</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;color:#6B7280;text-align:right">04</p>
+
+</section>
+<section class="slide" id="flow" data-transition="fade" style="background:#F6F4EE;color:#0E2A47;font-family:'Public Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#1F5FA8">How it works</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px;color:#0E2A47">How the money moves</h2>
+</div>
+<div data-build-in="rise order 1 auto" style="position:absolute;left:128px;top:284px;width:480px;height:236px;display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #DDD8CC;border-radius:16px;padding:32px">
+<h3 style="font-size:40px;font-weight:700;line-height:1.2;color:#1F5FA8">1. Contribute</h3>
+<p style="font-size:28px;line-height:1.4;color:#4A5568">Tax-deductible, claimed this year or saved for a later one</p>
+</div>
+<svg data-build-in="fade order 2 auto" style="position:absolute;left:616.0px;top:388.0px;width:96.0px;height:28px" viewBox="0 0 96.0 28"><line x1="0" y1="14" x2="82.0" y2="14" stroke="#1F5FA8" stroke-width="4"/><path d="M80.0 4 L96.0 14 L80.0 24 Z" fill="#1F5FA8"/></svg>
+<div data-build-in="rise order 3 auto" style="position:absolute;left:720px;top:284px;width:480px;height:236px;display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #DDD8CC;border-radius:16px;padding:32px">
+<h3 style="font-size:40px;font-weight:700;line-height:1.2;color:#1F5FA8">2. Grow</h3>
+<p style="font-size:28px;line-height:1.4;color:#4A5568">Invested in savings, GICs, funds, ETFs or stocks; growth isn’t taxed</p>
+</div>
+<svg data-build-in="fade order 4 auto" style="position:absolute;left:1208.0px;top:388.0px;width:96.0px;height:28px" viewBox="0 0 96.0 28"><line x1="0" y1="14" x2="82.0" y2="14" stroke="#1F5FA8" stroke-width="4"/><path d="M80.0 4 L96.0 14 L80.0 24 Z" fill="#1F5FA8"/></svg>
+<div data-build-in="rise order 5 auto" style="position:absolute;left:1312px;top:284px;width:480px;height:236px;display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #DDD8CC;border-radius:16px;padding:32px">
+<h3 style="font-size:40px;font-weight:700;line-height:1.2;color:#1F5FA8">3. Use it</h3>
+<p style="font-size:28px;line-height:1.4;color:#4A5568">Buy a first home, or roll it into an RRSP (see below)</p>
+</div>
+<div data-build-in="rise order 6 auto" style="position:absolute;left:128px;top:552px;width:820px;height:248px;display:flex;flex-direction:column;gap:12px;background:#0E2A47;border-radius:16px;padding:32px">
+<div style="display:flex;flex-direction:row;align-items:center;gap:16px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#F2C230;width:44px;height:44px" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/></svg>
+<h3 style="font-size:40px;font-weight:700;line-height:1.2;color:#F6F4EE">They buy a first home</h3>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#C9D4E3">Qualifying withdrawal: tax-free, not added to their income, and never paid back</p>
+</div>
+<div data-build-in="rise order 7 auto" style="position:absolute;left:972px;top:552px;width:820px;height:248px;display:flex;flex-direction:column;gap:12px;background:#0E2A47;border-radius:16px;padding:32px">
+<div style="display:flex;flex-direction:row;align-items:center;gap:16px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#F2C230;width:44px;height:44px" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+<h3 style="font-size:40px;font-weight:700;line-height:1.2;color:#F6F4EE">They don’t buy</h3>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#C9D4E3">Direct transfer to their RRSP or RRIF: tax-free, and it doesn’t use RRSP room. Cashing out instead is taxable.</p>
+</div>
+<p data-build-in="fade order 8 auto" style="position:absolute;left:128px;top:826px;width:1664px;font-size:28px;line-height:1.4;color:#4A5568"><b>Deadline:</b> Dec 31 of the 15th year after opening, or of the year they turn 71, whichever comes first.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1200px;font-size:24px;color:#6B7280">First Home Savings Account · Morning huddle</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;color:#6B7280;text-align:right">05</p>
+
+</section>
+<section class="slide" id="withdrawal" data-transition="push" style="background:#F6F4EE;color:#0E2A47;font-family:'Public Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#1F5FA8">Withdrawals</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px;color:#0E2A47">Tax-free withdrawals: six conditions</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px 48px">
+<div style="display:flex;flex-direction:row;align-items:start;gap:16px;border-top:1px solid #DDD8CC;padding:20px 0px 0px 0px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#1F5FA8;width:40px;height:40px" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
+<p style="font-size:28px;line-height:1.4;color:#0E2A47">Still a first-time buyer when they withdraw</p>
+</div>
+<div style="display:flex;flex-direction:row;align-items:start;gap:16px;border-top:1px solid #DDD8CC;padding:20px 0px 0px 0px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#1F5FA8;width:40px;height:40px" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
+<p style="font-size:28px;line-height:1.4;color:#0E2A47">Written agreement to buy or build a home in Canada, closing before Oct 1 of the following year</p>
+</div>
+<div style="display:flex;flex-direction:row;align-items:start;gap:16px;border-top:1px solid #DDD8CC;padding:20px 0px 0px 0px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#1F5FA8;width:40px;height:40px" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
+<p style="font-size:28px;line-height:1.4;color:#0E2A47">Home not acquired more than 30 days before the withdrawal</p>
+</div>
+<div style="display:flex;flex-direction:row;align-items:start;gap:16px;border-top:1px solid #DDD8CC;padding:20px 0px 0px 0px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#1F5FA8;width:40px;height:40px" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
+<p style="font-size:28px;line-height:1.4;color:#0E2A47">Canadian resident from the withdrawal until the purchase</p>
+</div>
+<div style="display:flex;flex-direction:row;align-items:start;gap:16px;border-top:1px solid #DDD8CC;padding:20px 0px 0px 0px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#1F5FA8;width:40px;height:40px" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
+<p style="font-size:28px;line-height:1.4;color:#0E2A47">Plans to live in it as their main home within one year</p>
+</div>
+<div style="display:flex;flex-direction:row;align-items:start;gap:16px;border-top:1px solid #DDD8CC;padding:20px 0px 0px 0px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#1F5FA8;width:40px;height:40px" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
+<p style="font-size:28px;line-height:1.4;color:#0E2A47">Completes CRA Form RC725 and gives it to us</p>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+<p style="font-size:28px;line-height:1.4;color:#0E2A47;background:#E3EBF5;border-radius:12px;padding:24px 28px"><b>Couples:</b> each can withdraw from their own FHSA for the same home.</p>
+<p style="font-size:28px;line-height:1.4;color:#0E2A47;background:#E3EBF5;border-radius:12px;padding:24px 28px"><b>Afterwards:</b> close every FHSA by Dec 31 of the following year.</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1200px;font-size:24px;color:#6B7280">First Home Savings Account · Morning huddle</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;color:#6B7280;text-align:right">06</p>
+
+</section>
+<section class="slide" id="compare" data-transition="fade" style="background:#F6F4EE;color:#0E2A47;font-family:'Public Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#1F5FA8">Comparison</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px;color:#0E2A47">FHSA vs. Home Buyers’ Plan vs. TFSA</h2>
+</div>
+<table style="font-size:28px;color:#0E2A47;background:#FDFCF9;border:1px solid #DDD8CC;border-radius:12px">
+<tr style="background:#0E2A47"><th style="width:28%;color:#F6F4EE"></th><th style="width:24%;color:#F2C230">FHSA</th><th style="width:24%;color:#F6F4EE">Home Buyers’ Plan</th><th style="width:24%;color:#F6F4EE">TFSA</th></tr>
+<tr><td>Contribution deductible?</td><td style="color:#1F5FA8">Yes</td><td>Yes, as an RRSP</td><td>No</td></tr>
+<tr style="background:#EFECE4"><td>Withdrawal to buy a home</td><td style="color:#1F5FA8">Tax-free</td><td>Tax-free if repaid</td><td>Tax-free</td></tr>
+<tr><td>Has to be paid back?</td><td style="color:#1F5FA8">No</td><td>Yes, over 15 years</td><td>No</td></tr>
+<tr style="background:#EFECE4"><td>Most usable per person</td><td style="color:#1F5FA8">$40,000 + growth</td><td>$60,000</td><td>All of it, any use</td></tr>
+<tr><td>First-time buyers only?</td><td style="color:#1F5FA8">Yes</td><td>Yes</td><td>No</td></tr>
+<tr style="background:#EFECE4"><td>If plans change</td><td style="color:#1F5FA8">Roll to RRSP tax-free</td><td>Kept for retirement</td><td>Use for anything</td></tr>
+</table>
+<div style="display:flex;flex-direction:row;align-items:center;gap:20px;background:#1F5FA8;border-radius:12px;padding:24px 32px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#FFE08A;width:44px;height:44px" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>
+<p style="font-size:28px;line-height:1.4;color:#F6F4EE"><b>They stack:</b> FHSA + HBP = up to $100,000 per person, $200,000 for a couple, before growth.</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1200px;font-size:24px;color:#6B7280">First Home Savings Account · Morning huddle</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;color:#6B7280;text-align:right">07</p>
+
+</section>
+<section class="slide" id="example" data-transition="fade" style="background:#F6F4EE;color:#0E2A47;font-family:'Public Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#1F5FA8">Illustration</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px;color:#0E2A47">What it looks like for one client</h2>
+</div>
+<p style="font-size:32px;line-height:1.4;color:#4A5568">A 27-year-old renter opens an FHSA in 2026 and puts in $8,000 a year for five years.</p>
+<iframe class="emb" style="position:absolute;left:128px;top:376px;width:1020px;height:464px;border:0" srcdoc="&lt;!doctype html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;style&gt;
+html,body{margin:0;height:100%;background:transparent;overflow:hidden}
+body{font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif}
+svg{position:absolute;left:0;top:0;width:100%;height:100%}
+.v{font-size:26px;font-weight:800;fill:#0E2A47;text-anchor:middle}
+.y{font-size:24px;font-weight:600;fill:#4A5568;text-anchor:middle}
+.r{font-size:24px;font-weight:700;fill:#8A5A00;text-anchor:middle}
+.c{font-size:32px;font-weight:800;fill:#0E2A47}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;svg id=&quot;s&quot; viewBox=&quot;0 0 1020 464&quot; preserveAspectRatio=&quot;xMidYMid meet&quot;&gt;
+&lt;line x1=&quot;40&quot; y1=&quot;360&quot; x2=&quot;1000&quot; y2=&quot;360&quot; stroke=&quot;#C9C3B5&quot; stroke-width=&quot;2&quot;/&gt;
+&lt;text id=&quot;cap&quot; class=&quot;c&quot; x=&quot;40&quot; y=&quot;46&quot; opacity=&quot;0&quot;&gt;$40,000 ready to withdraw, tax-free&lt;/text&gt;
+&lt;rect id=&quot;ul&quot; x=&quot;40&quot; y=&quot;60&quot; width=&quot;0&quot; height=&quot;5&quot; rx=&quot;2.5&quot; fill=&quot;#F2C230&quot;/&gt;
+&lt;/svg&gt;
+&lt;script&gt;
+(function(){
+var NS=&#x27;http://www.w3.org/2000/svg&#x27;,s=document.getElementById(&#x27;s&#x27;),cap=document.getElementById(&#x27;cap&#x27;),ul=document.getElementById(&#x27;ul&#x27;);
+var Y=[&#x27;2026&#x27;,&#x27;2027&#x27;,&#x27;2028&#x27;,&#x27;2029&#x27;,&#x27;2030&#x27;],B=[],SEG=50;
+function mk(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);s.appendChild(e);return e;}
+Y.forEach(function(y,i){var cx=110+i*190,g={cx:cx};
+g.base=mk(&#x27;rect&#x27;,{x:cx-55,width:110,y:360,height:0,rx:6,fill:&#x27;#1F5FA8&#x27;});
+g.top=mk(&#x27;rect&#x27;,{x:cx-55,width:110,y:360,height:0,rx:6,fill:&#x27;#4A8FE0&#x27;});
+g.v=mk(&#x27;text&#x27;,{x:cx,y:350,&#x27;class&#x27;:&#x27;v&#x27;,opacity:0});g.v.textContent=&#x27;$&#x27;+(8*(i+1))+&#x27;,000&#x27;;
+g.y=mk(&#x27;text&#x27;,{x:cx,y:396,&#x27;class&#x27;:&#x27;y&#x27;});g.y.textContent=y;
+g.r=mk(&#x27;text&#x27;,{x:cx,y:436,&#x27;class&#x27;:&#x27;r&#x27;,opacity:0});g.r.textContent=&#x27;+$2,400 back&#x27;;
+B.push(g);});
+function cl(x){return Math.max(0,Math.min(1,x))}
+function eo(x){return 1-Math.pow(1-x,3)}
+function bk(x){var c=1.5;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)}
+var start=null,last=0;
+function draw(t){
+B.forEach(function(g,i){var s0=0.3+i*0.5,a=cl((t-s0)/0.6),h=SEG*(i+1)*bk(a),hb=Math.max(0,h-SEG),top=360-h;
+g.base.setAttribute(&#x27;y&#x27;,360-hb);g.base.setAttribute(&#x27;height&#x27;,hb);
+var th=Math.max(0,Math.min(SEG,h));g.top.setAttribute(&#x27;y&#x27;,top);g.top.setAttribute(&#x27;height&#x27;,th);
+var gl=cl((t-s0-0.6)/0.8);g.top.setAttribute(&#x27;fill&#x27;,i==4?&#x27;#4A8FE0&#x27;:(gl&gt;=1?&#x27;#1F5FA8&#x27;:&#x27;#4A8FE0&#x27;));
+g.top.setAttribute(&#x27;opacity&#x27;,i==4&amp;&amp;t&gt;3?(0.85+0.15*Math.sin(t*2.4)).toFixed(3):1);
+g.v.setAttribute(&#x27;y&#x27;,(top-14).toFixed(1));g.v.setAttribute(&#x27;opacity&#x27;,cl((t-s0-0.2)/0.4));
+g.r.setAttribute(&#x27;opacity&#x27;,cl((t-s0-0.4)/0.4));});
+var c=cl((t-3.0)/0.5);cap.setAttribute(&#x27;opacity&#x27;,c);cap.setAttribute(&#x27;transform&#x27;,&#x27;translate(0,&#x27;+(10*(1-eo(c))).toFixed(1)+&#x27;)&#x27;);
+ul.setAttribute(&#x27;width&#x27;,(560*eo(cl((t-3.3)/0.7))).toFixed(1));}
+function f(ts){if(start===null||ts-last&gt;400)start=ts;last=ts;draw((ts-start)/1000);requestAnimationFrame(f);}
+requestAnimationFrame(f);
+})();
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;" scrolling="no" tabindex="-1"></iframe>
+<div data-build-in="rise order 1 auto" style="position:absolute;left:1180px;top:376px;width:612px;display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #DDD8CC;border-radius:16px;padding:36px">
+<p style="font-size:80px;font-weight:800;line-height:1.1;letter-spacing:-1px;color:#8A5A00">≈$12,000</p>
+<p style="font-size:28px;line-height:1.4;color:#4A5568">Back in tax refunds over five years, at an assumed 30% tax rate</p>
+</div>
+<div data-build-in="rise order 2 auto" style="position:absolute;left:1180px;top:656px;width:612px;display:flex;flex-direction:row;align-items:start;gap:20px;background:#0E2A47;border-radius:16px;padding:32px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#F2C230;width:44px;height:44px" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+<p style="font-size:28px;line-height:1.4;color:#F6F4EE"><b>Partner does the same?</b> $80,000+ toward one home, before the HBP.</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1200px;font-size:24px;color:#6B7280">First Home Savings Account · Morning huddle · Illustrative only</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;color:#6B7280;text-align:right">08</p>
+
+</section>
+<section class="slide" id="traps" data-transition="push" style="background:#F6F4EE;color:#0E2A47;font-family:'Public Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#1F5FA8">Watch for these</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px;color:#0E2A47">Five things clients get wrong</h2>
+</div>
+<div style="display:flex;flex-direction:column">
+<div style="display:flex;flex-direction:row;gap:32px;border-top:1px solid #DDD8CC;padding:16px 0px">
+<p style="width:560px;font-size:28px;line-height:1.4;font-weight:700;color:#0E2A47">Waiting until they’re ready to buy</p>
+<p style="flex:1;font-size:28px;line-height:1.4;color:#4A5568">Room only starts once the account is open. Open now and let the room build while they save.</p>
+</div>
+<div style="display:flex;flex-direction:row;gap:32px;border-top:1px solid #DDD8CC;padding:16px 0px">
+<p style="width:560px;font-size:28px;line-height:1.4;font-weight:700;color:#0E2A47">Treating the room like a TFSA</p>
+<p style="flex:1;font-size:28px;line-height:1.4;color:#4A5568">Unused room carries forward only up to $8,000, so they can’t catch up several years at once.</p>
+</div>
+<div style="display:flex;flex-direction:row;gap:32px;border-top:1px solid #DDD8CC;padding:16px 0px">
+<p style="width:560px;font-size:28px;line-height:1.4;font-weight:700;color:#0E2A47">Putting in too much</p>
+<p style="flex:1;font-size:28px;line-height:1.4;color:#4A5568">The excess is taxed at 1% per month until it’s fixed.</p>
+</div>
+<div style="display:flex;flex-direction:row;gap:32px;border-top:1px solid #DDD8CC;padding:16px 0px">
+<p style="width:560px;font-size:28px;line-height:1.4;font-weight:700;color:#0E2A47">Expecting an RRSP-style 60-day window</p>
+<p style="flex:1;font-size:28px;line-height:1.4;color:#4A5568">Contributions count for the calendar year they’re made. January deposits can’t go on last year’s return.</p>
+</div>
+<div style="display:flex;flex-direction:row;gap:32px;border-top:1px solid #DDD8CC;border-bottom:1px solid #DDD8CC;padding:16px 0px">
+<p style="width:560px;font-size:28px;line-height:1.4;font-weight:700;color:#0E2A47">Moving money by cashing it out</p>
+<p style="flex:1;font-size:28px;line-height:1.4;color:#4A5568">Use a direct transfer (Form RC721). A cash withdrawal is taxable, and an FHSA can’t transfer into a TFSA.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1200px;font-size:24px;color:#6B7280">First Home Savings Account · Morning huddle</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;color:#6B7280;text-align:right">09</p>
+
+</section>
+<section class="slide" id="rbc" data-transition="fade" style="background:#F6F4EE;color:#0E2A47;font-family:'Public Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#1F5FA8">At RBC</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px;color:#0E2A47">Opening one with us</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+<div style="display:flex;flex-direction:column;gap:16px;background:#FDFCF9;border:1px solid #DDD8CC;border-radius:16px;padding:40px">
+<h3 style="font-size:40px;font-weight:700;line-height:1.2;color:#0E2A47">What it can hold</h3>
+<ul style="font-size:28px;line-height:1.4;color:#4A5568">
+<li>Savings deposits</li>
+<li>GICs (a few types can’t be held)</li>
+<li>Mutual funds</li>
+<li>ETFs</li>
+<li>Stocks, bonds and options</li>
+</ul>
+<p style="font-size:26px;font-weight:600;color:#0E2A47;background:#F2C230;border-radius:999px;padding:10px 24px">No minimum balance to open</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px;background:#FDFCF9;border:1px solid #DDD8CC;border-radius:16px;padding:40px">
+<h3 style="font-size:40px;font-weight:700;line-height:1.2;color:#0E2A47">Three ways in</h3>
+<div style="display:flex;flex-direction:column;gap:4px">
+<p style="font-size:28px;line-height:1.4;font-weight:700;color:#1F5FA8">With an advisor</p>
+<p style="font-size:28px;line-height:1.4;color:#4A5568">In branch, by phone or by video</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:4px">
+<p style="font-size:28px;line-height:1.4;font-weight:700;color:#1F5FA8">RBC Direct Investing</p>
+<p style="font-size:28px;line-height:1.4;color:#4A5568">Self-directed: the client picks and trades</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:4px">
+<p style="font-size:28px;line-height:1.4;font-weight:700;color:#1F5FA8">RBC InvestEase</p>
+<p style="font-size:28px;line-height:1.4;color:#4A5568">A managed ETF portfolio, chosen for them</p>
+</div>
+</div>
+</div>
+<div style="display:flex;flex-direction:row;align-items:center;gap:20px;background:#0E2A47;border-radius:12px;padding:24px 32px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#F2C230;width:44px;height:44px" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+<p style="font-size:28px;line-height:1.4;color:#F6F4EE"><b>Make it automatic:</b> set up regular contributions at account opening so clients stay on track.</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1200px;font-size:24px;color:#6B7280">First Home Savings Account · Morning huddle</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;color:#6B7280;text-align:right">10</p>
+
+</section>
+<section class="slide" id="who" data-transition="fade" style="background:#F6F4EE;color:#0E2A47;font-family:'Public Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#1F5FA8">Spotting the opportunity</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px;color:#0E2A47">Who to bring it up with</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+<div style="display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #DDD8CC;border-radius:16px;padding:32px">
+<div style="display:flex;flex-direction:row;align-items:center;gap:16px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#1F5FA8;width:44px;height:44px" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/></svg>
+<h3 style="font-size:40px;font-weight:700;line-height:1.2;color:#0E2A47">Renters saving to buy</h3>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#4A5568">Open now, automate contributions, and match investments to the timeline.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #DDD8CC;border-radius:16px;padding:32px">
+<div style="display:flex;flex-direction:row;align-items:center;gap:16px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#1F5FA8;width:44px;height:44px" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+<h3 style="font-size:40px;font-weight:700;line-height:1.2;color:#0E2A47">Young adults, new grads</h3>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#4A5568">Room starts on opening. Family can gift the cash; deduct it in a higher-income year.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #DDD8CC;border-radius:16px;padding:32px">
+<div style="display:flex;flex-direction:row;align-items:center;gap:16px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#1F5FA8;width:44px;height:44px" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+<h3 style="font-size:40px;font-weight:700;line-height:1.2;color:#0E2A47">Clients with RRSP savings</h3>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#4A5568">A direct RRSP transfer can move savings in. Not deductible; uses FHSA room.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#FDFCF9;border:1px solid #DDD8CC;border-radius:16px;padding:32px">
+<div style="display:flex;flex-direction:row;align-items:center;gap:16px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#1F5FA8;width:44px;height:44px" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+<h3 style="font-size:40px;font-weight:700;line-height:1.2;color:#0E2A47">Couples buying together</h3>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#4A5568">Each opens their own FHSA; both can use theirs on the same home.</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:row;align-items:center;gap:20px;background:#1F5FA8;border-radius:12px;padding:24px 32px">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:#FFE08A;width:44px;height:44px" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+<p style="font-size:28px;line-height:1.4;color:#F6F4EE"><b>The opener:</b> “Is buying a home part of your plans in the next 15 years?”</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1200px;font-size:24px;color:#6B7280">First Home Savings Account · Morning huddle</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;color:#6B7280;text-align:right">11</p>
+
+</section>
+<section class="slide" id="close" data-transition="push" style="background:#0E2A47;color:#F6F4EE;font-family:'Public Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#F2C230">Takeaways</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px;color:#F6F4EE">Three things to remember</h2>
+</div>
+<div data-build-in="rise order 1 auto" style="position:absolute;left:128px;top:368px;width:1664px;display:flex;flex-direction:row;align-items:center;gap:40px">
+<p style="width:80px;font-size:72px;font-weight:800;line-height:1.1;color:#F2C230">1</p>
+<p style="flex:1;font-size:40px;line-height:1.3;color:#F6F4EE"><b>Open it early.</b> Contribution room only starts the year the account opens.</p>
+</div>
+<div data-build-in="rise order 2 auto" style="position:absolute;left:128px;top:508px;width:1664px;display:flex;flex-direction:row;align-items:center;gap:40px">
+<p style="width:80px;font-size:72px;font-weight:800;line-height:1.1;color:#F2C230">2</p>
+<p style="flex:1;font-size:40px;line-height:1.3;color:#F6F4EE"><b>Contribute and deduct.</b> Claim the deduction now, or save it for a higher-income year.</p>
+</div>
+<div data-build-in="rise order 3 auto" style="position:absolute;left:128px;top:648px;width:1664px;display:flex;flex-direction:row;align-items:center;gap:40px">
+<p style="width:80px;font-size:72px;font-weight:800;line-height:1.1;color:#F2C230">3</p>
+<p style="flex:1;font-size:40px;line-height:1.3;color:#F6F4EE"><b>Use it or roll it.</b> Tax-free for a first home, or tax-free into an RRSP if they never buy.</p>
+</div>
+<p data-build-in="pop order 4 auto" style="position:absolute;left:128px;top:832px;width:800px;font-size:72px;font-weight:800;line-height:1.1;letter-spacing:-1px;color:#F6F4EE">Questions?</p>
+
+</section>
+<section class="slide" id="qa1" data-transition="fade" style="background:#F6F4EE;color:#0E2A47;font-family:'Public Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#1F5FA8">Backup for Q&amp;A</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px;color:#0E2A47">Quick answers, 1 of 2</h2>
+</div>
+<table style="font-size:26px;color:#0E2A47;background:#FDFCF9;border:1px solid #DDD8CC;border-radius:12px">
+<tr style="background:#0E2A47"><th style="width:36%;color:#F6F4EE">Question</th><th style="width:64%;color:#F6F4EE">Answer</th></tr>
+<tr><td>More than one FHSA?</td><td>Yes, but all of a client’s FHSAs share one $8,000 annual room and one $40,000 lifetime limit.</td></tr>
+<tr style="background:#EFECE4"><td>Can it be joint?</td><td>No. Only the holder contributes and claims the deduction, though anyone can gift them the money.</td></tr>
+<tr><td>Does growth use up room?</td><td>No. Only contributions and RRSP transfers count toward the limits.</td></tr>
+<tr style="background:#EFECE4"><td>FHSA and HBP on one home?</td><td>Yes, if they meet the conditions for each withdrawal when it’s made.</td></tr>
+<tr><td>Can RRSP money go in?</td><td>Yes, by direct transfer. Not deductible, uses FHSA room, and the RRSP room isn’t restored.</td></tr>
+</table>
+<p style="position:absolute;left:128px;bottom:64px;width:1200px;font-size:24px;color:#6B7280">First Home Savings Account · Morning huddle · Appendix</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;color:#6B7280;text-align:right">13</p>
+
+</section>
+<section class="slide" id="qa2" data-transition="fade" style="background:#F6F4EE;color:#0E2A47;font-family:'Public Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#1F5FA8">Backup for Q&amp;A</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px;color:#0E2A47">Quick answers, 2 of 2</h2>
+</div>
+<table style="font-size:26px;color:#0E2A47;background:#FDFCF9;border:1px solid #DDD8CC;border-radius:12px">
+<tr style="background:#0E2A47"><th style="width:36%;color:#F6F4EE">Question</th><th style="width:64%;color:#F6F4EE">Answer</th></tr>
+<tr><td>What if they never buy?</td><td>Before the deadline, transfer it directly to an RRSP or RRIF tax-free, or withdraw it as taxable income.</td></tr>
+<tr style="background:#EFECE4"><td>They live in a home their partner owns?</td><td>They can’t open one while that’s the case. The spouse rule applies at opening.</td></tr>
+<tr><td>Withdrawal for something else?</td><td>It’s added to their income and tax is withheld. Check their CRA account before they put money back in.</td></tr>
+<tr style="background:#EFECE4"><td>What gets reported?</td><td>Schedule 15 with the tax return in the year it’s opened, even at $0. We issue a T4FHSA slip.</td></tr>
+<tr><td>What if the holder dies?</td><td>A spouse can take it over as successor holder; other beneficiaries receive it as taxable income.</td></tr>
+</table>
+<p style="position:absolute;left:128px;bottom:64px;width:1200px;font-size:24px;color:#6B7280">Sources: rbcroyalbank.com/investments/fhsa · canada.ca FHSA pages (Oct 2026)</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;color:#6B7280;text-align:right">14</p>
+
+</section>
+    </div></div>
+    <aside class="notes" id="notes" hidden><h4>Speaker notes</h4><div id="nt"></div></aside>
+  </div>
+  <div class="bar">
+    <button id="prev" aria-label="Previous slide">←</button>
+    <span class="cnt" id="cnt"></span>
+    <button id="next" aria-label="Next slide">→</button>
+    <button id="nb">Notes</button>
+    <button id="fb">Present</button>
+  </div>
+</div>
+<script>
+(function(){
+var NOTES=["(~20 sec) Good morning, everyone. Today’s topic is the FHSA, the First Home Savings Account. While that house fills up on screen, here’s the goal: in under ten minutes you’ll be able to explain the FHSA to any client, know exactly who qualifies, and spot the mistakes people make with it. Everything here comes from our RBC FHSA page and CRA’s current rules. If you can hold questions to the end, I have two backup slides with quick answers.", "(~40 sec) If you remember one thing from today, make it this: the FHSA takes the best part of the RRSP and the best part of the TFSA and puts them in one account.\n\n[Click / let the three columns come in one at a time]\n\nGoing in: every contribution is tax-deductible, exactly like an RRSP, so the client gets a refund.\nWhile it’s invested: interest, dividends and capital gains inside the account are never taxed.\nComing out: if the money buys a first home, the withdrawal is tax-free like a TFSA. And unlike the RRSP Home Buyers’ Plan, there’s nothing to pay back.\n\nThe federal government launched it on April 1, 2023. No other registered account gives you a deduction going in AND a tax-free withdrawal coming out. That’s why, for anyone saving for their first place, this should be the first account we bring up.", "(~60 sec) Four boxes to tick, all at the moment they open the account.\n\nOne: age. At least 18 and the age of majority in their province, which is 19 here in Nova Scotia. And no older than 71 at the end of the year they open it.\n\nTwo: Canadian resident, with a SIN.\n\nThree: first-time buyer. That doesn’t literally mean they’ve never owned. It means they haven’t lived in a home they owned this calendar year or in the previous four. So someone who sold five or more years ago can qualify again.\n\nFour, the one people miss: the spouse rule. If they currently live in a home their spouse or common-law partner owns, they can’t open one. CRA’s own example is a client living in his partner’s house: not eligible.\n\nGood to know: the first-time-buyer test is checked again at the moment of withdrawal, and that version only looks at homes the client owned themselves.", "(~60 sec) Four numbers. [Let them count up]\n\n$8,000 a year. That’s contributions and any RRSP transfers combined, not $8,000 of each.\n\n$40,000 lifetime, across every FHSA the client has.\n\nUnused room carries forward, but only up to $8,000. That’s the difference from a TFSA, where room piles up indefinitely. So the most anyone can put in in a single year is $16,000. RBC’s own example: contribute $5,000 in 2023, and you can put in $11,000 in 2024, which is the $8,000 plus the $3,000 you didn’t use.\n\nThe account can stay open up to 15 years from when the first FHSA was opened, or until the end of the year they turn 71, whichever comes first.\n\nAnd the most important point on this slide, the dark bar at the bottom: room does NOT start at 18. It starts the year the client opens their first FHSA. Someone who waits three years to open loses those three years of room. So the advice is simple: open it now, even with nothing in it. The trade-off is that opening also starts the 15-year clock, which for most clients is plenty of time.\n\nInvestment growth inside the account doesn’t count against any of these limits. Only contributions and RRSP transfers use room.", "(~60 sec) Three steps, then one of two endings. [The pieces build in left to right]\n\n1. Contribute: the deduction timing is the client’s choice. They can claim it this year, or carry undeducted contributions forward indefinitely and claim them in a higher-income year. Great for a student or new grad: contribute now, deduct later when the refund is worth more.\n\n2. Grow: it’s a registered plan, so it can hold savings deposits, GICs, mutual funds, ETFs and stocks. Growth is tax-free.\n\n3. Use it, and here are the two endings.\n\nThey buy a first home: a qualifying withdrawal is tax-free, it doesn’t show up as income, and unlike the HBP they never pay it back.\n\nThey don’t buy: this is why there’s no real downside. Before the deadline, they do a direct transfer into their RRSP or RRIF, tax-free, and it doesn’t use any of their RRSP contribution room. It just becomes extra retirement savings. Taking it out as cash instead is taxable.\n\nDeadline: December 31 of the 15th year after opening the first FHSA, or the year they turn 71, whichever comes first.", "(~60 sec) To take the money out tax-free, all six have to be true at the time of the withdrawal.\n\nThey’re still a first-time buyer.\nThey have a signed agreement to buy or build a qualifying home in Canada, closing before October 1 of the year after the withdrawal.\nThey didn’t already buy the home more than 30 days before withdrawing, so they can’t buy first and reimburse themselves months later.\nThey stay a Canadian resident until they get the home.\nThey plan to live in it as their main home within a year.\nAnd they fill out CRA Form RC725 and hand it to us as the issuer.\n\nQualifying homes: houses, semis, townhouses, condos, mobile homes, units in a duplex to fourplex. Not a co-op share that only gives a right to rent.\n\nThere’s no minimum holding period, so money can go in and come out fairly quickly. A qualifying withdrawal can’t be reversed once it’s made. Couples can each use their own FHSA on the same home. And once someone makes their first qualifying withdrawal, all their FHSAs need to be closed by December 31 of the next year.", "(~60 sec) This is the slide clients ask about most: how is this different from what I already have?\n\nThe Home Buyers’ Plan lets a first-time buyer take up to $60,000 out of their RRSP for a home; that limit went up from $35,000 in April 2024. It’s tax-free only because it’s a loan to yourself: it has to be paid back to the RRSP over 15 years, or the missed amount gets added to income. Repayments normally start the second year after the withdrawal. There’s a temporary longer grace period for first withdrawals made from 2022 to 2025, and the government has proposed extending it, so check CRA before quoting repayment dates.\n\nThe TFSA works for anything, with no first-time-buyer rule, but there’s no deduction going in.\n\nThe FHSA is the only one that gives you the deduction AND a tax-free withdrawal with no payback.\n\nAnd the key point: they aren’t either/or. A client can use the FHSA and the HBP on the same purchase. That’s $40,000 plus $60,000, so $100,000 per person, $200,000 for a couple, before any investment growth. TFSA savings can sit on top of that.\n\nPriority for most first-time buyers: fill the FHSA first.", "(~45 sec) To make it concrete, here’s an illustrative client. Not a real person, and the tax rate is an assumption. [Let the bars build year by year]\n\nShe’s 27, renting, opens an FHSA in 2026 and puts in $8,000 a year. Each bar is one more year of contributions. By 2030 she’s hit the $40,000 lifetime limit.\n\nEvery contribution is deductible. If her marginal rate is around 30%, each $8,000 deduction is worth about $2,400 back. That’s the gold figure under each year, and roughly $12,000 in refunds over five years. Her actual refund depends on her bracket. If her income is low right now, she can hold the deduction and claim it later when it’s worth more.\n\nWhen she buys, she takes out the full $40,000 plus whatever it earned, completely tax-free, and never pays it back. The chart only shows contributions; any investment growth is on top.\n\nIf her partner does the same, that’s $80,000 plus growth toward one home, and they haven’t even touched the Home Buyers’ Plan yet.\n\nA natural add-on for us: set up automatic contributions. $8,000 a year is about $667 a month.", "(~60 sec) Five mistakes we can save clients from.\n\nOne: waiting. People think they should open it when they’re close to buying. But room only starts the year the account is opened, so every year they wait is room they don’t get.\n\nTwo: thinking the room stacks up like a TFSA. It carries forward, but only $8,000 of it. The lifetime $40,000 is still there, they just can’t catch up years at once.\n\nThree: over-contributing. The penalty is 1% a month on the excess until it’s fixed, and a qualifying withdrawal doesn’t fix it, so sort it out before they buy.\n\nFour: this one catches people who know RRSPs well. There’s no 60-day window. A contribution in January or February counts for that year, not the previous tax year.\n\nFive: moving money the wrong way. To move FHSA money to an RRSP, RRIF or another FHSA, it has to be a direct transfer between institutions, Form RC721. If they withdraw it and redeposit it, the withdrawal is taxable. And there’s no direct route from an FHSA to a TFSA.\n\nBonus: clients need to file Schedule 15 with their tax return for the year they open the account, even if they put nothing in. That’s how CRA starts tracking their room.", "(~40 sec) On our side, there’s no minimum balance to open an FHSA, and clients can hold the full range: savings deposits, GICs, mutual funds, ETFs, and stocks, bonds and options. One caveat from our own page: certain GICs can’t be bought, sold or transferred into an FHSA, so check the specific product.\n\nThree ways in. With one of us, in branch, by phone or video, whether they’re investing $50 or $5,000. RBC Direct Investing if they want to trade themselves. Or RBC InvestEase, where they answer a few questions and get matched to a managed ETF portfolio.\n\nMatch the investment to the timeline: someone buying in 18 months shouldn’t be in the same mix as someone buying in eight years.\n\nAnd the easiest win: set up automatic contributions while they’re sitting with you. The FHSA line for clients with questions is 1-800-769-2563.", "(~45 sec) Who should we be raising this with? Four groups.\n\nRenters saving for a down payment: the obvious one. Open it, automate it, and invest for their timeline.\n\nYoung adults and new grads, 19 and up here in Nova Scotia. Even if they have nothing to put in, opening it starts the room. Parents can gift them the money to contribute. And if their income is low now, they can save the deduction for later.\n\nClients who already have RRSP savings and are thinking about buying. They can do a direct transfer from RRSP to FHSA. It’s not deductible again, and it uses FHSA room, but that money can then come out tax-free for the home with no repayment, unlike the HBP.\n\nCouples: each partner opens their own and both can use them on the same purchase.\n\nThe simplest opener in any review: “Is buying a home part of your plans in the next 15 years?” If the answer is yes, or even maybe, the FHSA conversation starts there. And if they never buy, it just rolls into their RRSP.", "(~30 sec) To wrap up, three things. [They come in one at a time]\n\nOne: open it early. Contribution room only starts the year the account is opened, so the best time to open is now, even with nothing in it.\n\nTwo: contribute and deduct. It’s an RRSP-style deduction, and the client can claim it right away or save it for a year when their income is higher.\n\nThree: use it or roll it. If they buy a first home, the money comes out tax-free and never gets paid back. If they don’t, it moves to their RRSP tax-free without using RRSP room. Either way, there’s very little downside to having one.\n\nHappy to take questions. [If needed, the next two slides have quick answers to the most likely ones.]", "Backup slide, only if questions come up.\n\nMore than one FHSA: allowed, at different institutions too, but the room is shared across all of them. CRA’s example: $5,000 at one bank plus $3,000 at another uses the full $8,000.\n\nJoint: no. It’s individual. Only the holder can contribute and only the holder gets the deduction. A spouse or parent can give them the money to put in.\n\nGrowth: investment income and gains don’t count against room. Someone can put in $8,000, watch it grow to $8,600, and they haven’t over-contributed.\n\nFHSA plus HBP: yes, both can be used for the same home if they qualify for each at the time of each withdrawal.\n\nRRSP to FHSA: a direct transfer is allowed. It’s not deductible because the RRSP contribution already was, it counts toward the $8,000 and $40,000 limits, and it doesn’t give back RRSP room.", "Backup slide, only if questions come up.\n\nNever buys: by the deadline (15 years, or end of the year they turn 71), a direct transfer to their RRSP or RRIF is tax-free and doesn’t need RRSP room. It has to be a direct transfer, Form RC721; withdrawing and redepositing makes it taxable. Or they can just withdraw it as income.\n\nPartner owns the home they live in: CRA’s example is exactly this, and the answer is not eligible to open. Note the withdrawal test is different and only looks at homes they owned themselves, so someone who already has an FHSA and moves into a partner’s home can still qualify at withdrawal.\n\nNon-qualifying withdrawal: taxable, tax withheld at source, and it shows on the T4FHSA. RBC’s page says the room isn’t reinstated; CRA’s current pages describe limited “re-participation room” in some cases. If a client asks, have them check their CRA account before re-contributing rather than quoting a number.\n\nReporting: Schedule 15 the year they open their first FHSA, even with no money in it. That’s what starts CRA tracking their room on the notice of assessment.\n\nDeath: a spouse or common-law partner can be named successor holder and take it over. Other beneficiaries get it as taxable income."];
+var S=[].slice.call(document.querySelectorAll('.slide')),i=0;
+var vp=document.getElementById('vp'),stage=document.getElementById('stage'),nt=document.getElementById('nt'),notes=document.getElementById('notes');
+var nb=document.getElementById('nb'),cnt=document.getElementById('cnt'),app=document.getElementById('app');
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+function fit(){var w=vp.clientWidth,h=vp.clientHeight,s=Math.min(w/1920,h/1080);
+  stage.style.transform='translate('+((w-1920*s)/2)+'px,'+((h-1080*s)/2)+'px) scale('+s+')';}
+function show(n){
+  n=Math.max(0,Math.min(S.length-1,n));
+  S.forEach(function(s,k){s.classList.remove('on','fx','fxpush');});
+  var s=S[n];i=n;
+  s.classList.add('on',s.getAttribute('data-transition')==='push'?'fxpush':'fx');
+  s.querySelectorAll('[data-build-in]').forEach(function(e){
+    var p=e.getAttribute('data-build-in').split(/\s+/),ord=parseInt(p[2]||'1',10);
+    e.classList.remove('bi','rise','fade','pop');void e.offsetWidth;
+    e.style.animationDelay=(0.35+ord*0.45)+'s';e.classList.add('bi',p[0]);});
+  s.querySelectorAll('iframe.emb').forEach(function(f){var d=f.getAttribute('srcdoc');f.srcdoc=d;});
+  nt.textContent=NOTES[n]||'(no notes)';
+  cnt.textContent=(n+1)+' / '+S.length;
+  history.replaceState(null,'','#'+(n+1));
+}
+function toggleNotes(on){notes.hidden=!on;nb.classList.toggle('on',on);store('fhsa:notes',on?'1':'0');fit();}
+document.getElementById('prev').onclick=function(){show(i-1)};
+document.getElementById('next').onclick=function(){show(i+1)};
+nb.onclick=function(){toggleNotes(notes.hidden)};
+document.getElementById('fb').onclick=function(){
+  var el=document.documentElement;
+  if(el.requestFullscreen){el.requestFullscreen().catch(function(){});}
+  app.classList.add('full');setTimeout(fit,60);};
+document.addEventListener('fullscreenchange',function(){if(!document.fullscreenElement)app.classList.remove('full');setTimeout(fit,60);});
+document.addEventListener('keydown',function(e){
+  if(['ArrowRight','PageDown',' ','Enter'].indexOf(e.key)>-1){e.preventDefault();show(i+1);}
+  else if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>-1){e.preventDefault();show(i-1);}
+  else if(e.key==='Home')show(0);else if(e.key==='End')show(S.length-1);
+  else if(e.key==='n'||e.key==='N')toggleNotes(notes.hidden);
+  else if(e.key==='f'||e.key==='F')document.getElementById('fb').click();
+  else if(e.key==='Escape')app.classList.remove('full'),setTimeout(fit,60);
+});
+var x0=null;
+vp.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+vp.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;
+  if(Math.abs(dx)>40)show(i+(dx<0?1:-1));x0=null;});
+vp.addEventListener('click',function(){show(i+1);});
+window.addEventListener('resize',fit);
+toggleNotes(store('fhsa:notes')==='1');
+fit();show((parseInt((location.hash||'#1').slice(1),10)||1)-1);
+})();
+</script>
+</body>
+</html>
